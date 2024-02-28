@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>接口幂等性</title>
+    <link href="/2024/02/28/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/"/>
+    <url>/2024/02/28/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/</url>
+    
+    <content type="html"><![CDATA[<h1 id="接口幂等性"><a href="#接口幂等性" class="headerlink" title="接口幂等性"></a>接口幂等性</h1><h2 id="1-什么是幂等性"><a href="#1-什么是幂等性" class="headerlink" title="1. 什么是幂等性"></a>1. 什么是幂等性</h2><p>接口幂等性就是用户对于同一操作发起的一次请求或则多次请求的结果是一致的，不回因为多次点击而产生了副作用。比如说支付场景，用户购买了商品支付扣款成功，但是返回结果的时候网络异常，此时钱已经扣了，用户再次点击按钮，此时会进行第二次扣款，返回结果成功，用户查询余额返发现多扣钱了，流水记录也变成了两条．．．,这就没有保证接口的幂等性</p><h1 id="2-哪些情况需要防止"><a href="#2-哪些情况需要防止" class="headerlink" title="2. 哪些情况需要防止"></a>2. 哪些情况需要防止</h1><p>用户多次点击按钮</p><p>用户页面回退再次提交</p><p>微服务互相调用，由于网络问题，导致请求失败。feign 触发重试机制（或代码中的重试机制）</p><p>其他业务情况</p><h1 id="3-什么情况下需要幂等"><a href="#3-什么情况下需要幂等" class="headerlink" title="3. 什么情况下需要幂等"></a>3. 什么情况下需要幂等</h1><p>以 SQL 为例，有些操作是天然幂等的。</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">table</span> WHER id<span class="hljs-operator">=</span>? #无论执行多少次都不会改变状态，是天然的幂等<br><span class="hljs-keyword">UPDATE</span> tab1 <span class="hljs-keyword">SET</span> col1<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">WHERE</span> col2<span class="hljs-operator">=</span><span class="hljs-number">2</span> #无论执行成功多少次状态都是一致的，也是幂等操作<br><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> userid<span class="hljs-operator">=</span><span class="hljs-number">1</span> #多次操作，结果一样，具备幂等性<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> <span class="hljs-keyword">user</span>(userid,name) <span class="hljs-keyword">values</span>(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;a&#x27;</span>) # 如 userid 为唯一主键，即重复操作上面的业务，只会插入一条用户数据，具备幂等性。<br><br><br><span class="hljs-keyword">UPDATE</span> tab1 <span class="hljs-keyword">SET</span> col1<span class="hljs-operator">=</span>col1<span class="hljs-operator">+</span><span class="hljs-number">1</span> <span class="hljs-keyword">WHERE</span> col2<span class="hljs-operator">=</span><span class="hljs-number">2</span> # 每次执行的结果都会发生变化，不是幂等的<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> <span class="hljs-keyword">user</span>(userid,name) <span class="hljs-keyword">values</span>(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;a&#x27;</span>) #) 如 userid 不是主键，可以重复，那上面业务多次操作，数据都会新增多条，不具备幂等性<br></code></pre></td></tr></table></figure><h1 id="4-幂等解决方案"><a href="#4-幂等解决方案" class="headerlink" title="4. 幂等解决方案"></a>4. 幂等解决方案</h1><ol><li>token机制 </li><li>各种锁的机制</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>方法论</tag>
+      
+      <tag>Java</tag>
+      
+      <tag>Go</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Mongo</title>
     <link href="/2024/02/28/Mongo/"/>
     <url>/2024/02/28/Mongo/</url>
@@ -39,9 +68,9 @@
     
     <tags>
       
-      <tag>java</tag>
-      
       <tag>方法论</tag>
+      
+      <tag>Java</tag>
       
     </tags>
     
