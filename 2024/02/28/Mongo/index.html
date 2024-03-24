@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://i.imgur.com/m7H6Ewr.png">
 <meta property="og:image" content="https://i.imgur.com/KIwvBx0.png">
 <meta property="article:published_time" content="2024-02-28T06:00:30.000Z">
-<meta property="article:modified_time" content="2024-03-14T08:14:08.260Z">
+<meta property="article:modified_time" content="2024-03-24T17:45:19.632Z">
 <meta property="article:author" content="phoenix">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/m7H6Ewr.png">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k words
+          2.9k words
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          19 mins
+          25 mins
         
       </span>
     
@@ -412,6 +412,8 @@
 <p>举个例子：可能会遇到字段中包含数组对象的情况，arrayFilter选项可以选择具体是哪个元素（根据条件）</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.form.updateMany(<br>	&#123;<br>		&quot;fieldGroupList.name&quot;: &quot;相对方信息&quot;,<br>		&quot;fieldGroupList.fieldList.id&quot;: &#123;<br>            &quot;$eq&quot;: &quot;counterpartyGroup_group&quot;,<br>        &#125;,<br>	&#125;,<br>	&#123;<br>		&quot;$set&quot; : &#123;<br>			&quot;fieldGroupList.$[elem].fieldList.$[e]&quot;: &#123;<br>				&quot;id&quot;:         &quot;counterpartyGroup_chabaidao&quot;,<br>				&quot;name&quot;:       &quot;相对方组&quot;,<br>				&quot;type&quot;:       <span class="hljs-number">-32</span>,<br>				&quot;isRequired&quot;: <span class="hljs-literal">false</span>,<br>				&quot;isFixed&quot;:    <span class="hljs-literal">true</span>,<br>			&#125;<br>		&#125;<br>	&#125;,<br>	&#123;<br>		&quot;arrayFilters&quot;: [<br>			&#123;<br>				&quot;elem.name&quot;: &quot;相对方信息&quot;<br>			&#125;,<br>			&#123;<br>				&quot;e.id&quot;: &quot;counterpartyGroup_chabaidao&quot;<br>			&#125;<br>		]<br>	&#125;<br>)<br></code></pre></td></tr></table></figure>
 
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.contract_chabaidao.updateOne(<br>	&#123;<br>		&quot;contractType.formFields.name&quot;: &quot;相对方信息&quot;,<br>		&quot;contractType.formFields.fieldList.name&quot;: &#123;<br>			&quot;$in&quot;: [&quot;外部相对方&quot;,&quot;内部相对方&quot;]<br>		&#125;,<br>		&quot;_id&quot;: ObjectId(&quot;650fd2e1f6c3e755d4d3fca6&quot;)<br>	&#125;,<br>	&#123;<br>		&quot;$pull&quot;: &#123;<br>			&quot;contractType.formFields.$[counter].fieldList&quot;: &#123;<br>				&quot;name&quot;: &#123;<br>					&quot;$in&quot;: [&quot;内部相对方&quot;,&quot;外部相对方&quot;]<br>				&#125;<br>			&#125;<br>		&#125;<br>	&#125;,<br>	&#123;<br>		&quot;arrayFilters&quot;: [&#123;&quot;counter.name&quot;: &quot;相对方信息&quot;&#125;]<br>	&#125;<br>)<br></code></pre></td></tr></table></figure>
+
 <p><strong>save() 方法</strong></p>
 <p>save() 方法通过传入的文档来替换已有文档，_id 主键存在就更新，不存在就插入。语法格式如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.collection.save(<br>   &lt;document&gt;,<br>   &#123;<br>     writeConcern: &lt;document&gt;<br>   &#125;<br>)<br></code></pre></td></tr></table></figure>
@@ -458,7 +460,63 @@
 <h1 id="4-DSL语句"><a href="#4-DSL语句" class="headerlink" title="4. DSL语句"></a>4. DSL语句</h1><blockquote>
 <p>常用的就那些</p>
 </blockquote>
-<h1 id="5-聚合查询"><a href="#5-聚合查询" class="headerlink" title="5. 聚合查询"></a>5. 聚合查询</h1><h1 id="6-关键字"><a href="#6-关键字" class="headerlink" title="6. 关键字"></a>6. 关键字</h1><h1 id="7-排序"><a href="#7-排序" class="headerlink" title="7. 排序"></a>7. 排序</h1><h1 id="8-索引"><a href="#8-索引" class="headerlink" title="8. 索引"></a>8. 索引</h1><h1 id="9-聚合"><a href="#9-聚合" class="headerlink" title="9. 聚合"></a>9. 聚合</h1><h1 id="10-监控、备份、恢复、分片"><a href="#10-监控、备份、恢复、分片" class="headerlink" title="10. 监控、备份、恢复、分片"></a>10. 监控、备份、恢复、分片</h1>
+<h1 id="5-聚合查询"><a href="#5-聚合查询" class="headerlink" title="5. 聚合查询"></a>5. 聚合查询</h1><p>MongoDB  中聚合(aggregate)主要用于处理数据(诸如统计平均值，求和等)，并返回计算后的数据结果。</p>
+<p>有点类似 <strong>SQL</strong> 语句中的 **count(*)**。</p>
+<h2 id="5-1-aggregate-方法"><a href="#5-1-aggregate-方法" class="headerlink" title="5.1 aggregate 方法"></a>5.1 aggregate 方法</h2><p>MongoDB 中聚合的方法使用aggregate()。</p>
+<p>aggregate() 方法的基本语法格式如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">&gt;</span>db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)<br></code></pre></td></tr></table></figure>
+
+<p>AGGREGATE_OPERATION 详解</p>
+<blockquote>
+<p>示例</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.orders.aggregate([<br>  &#123;<br>    $<span class="hljs-keyword">group</span>: &#123;<br>      _id: &quot;$category&quot;,<br>      totalOrders: &#123; $sum: <span class="hljs-number">1</span> &#125;,<br>      averagePrice: &#123; $avg: &quot;$price&quot; &#125;<br>    &#125;<br>  &#125;<br>])<br></code></pre></td></tr></table></figure>
+
+<p><strong>用法</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql">&#123;<br>  $<span class="hljs-keyword">group</span>: &#123;<br>    _id: <span class="hljs-operator">&lt;</span>expression<span class="hljs-operator">&gt;</span>, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 用于指定分组的依据，可以是字段名或者表达式<br>    field1: &#123; <span class="hljs-operator">&lt;</span>accumulator1<span class="hljs-operator">&gt;</span> : <span class="hljs-operator">&lt;</span>expression1<span class="hljs-operator">&gt;</span> &#125;, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 对应于要计算的字段<span class="hljs-number">1</span>的累加器和表达式<br>    field2: &#123; <span class="hljs-operator">&lt;</span>accumulator2<span class="hljs-operator">&gt;</span> : <span class="hljs-operator">&lt;</span>expression2<span class="hljs-operator">&gt;</span> &#125;, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 对应于要计算的字段<span class="hljs-number">2</span>的累加器和表达式<br>    ...<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>详细用法:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.orders.aggregate([<br>  &#123;<br>    $<span class="hljs-keyword">group</span>: &#123;<br>      _id: &quot;$category&quot;,<br>      totalOrders: &#123; $sum: <span class="hljs-number">1</span> &#125;,<br>      averagePrice: &#123; $avg: &quot;$price&quot; &#125;<br>    &#125;<br>  &#125;,<br>    &#123;<br>    $sort: &#123; averagePrice: <span class="hljs-number">-1</span> &#125; <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 按照平均价格降序排序<br>  &#125;<br>])<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-1-1-accumulator"><a href="#5-1-1-accumulator" class="headerlink" title="5.1.1 accumulator"></a>5.1.1 accumulator</h3><p>在MongoDB的聚合管道中，累加器（accumulator）是用于对文档进行聚合计算的操作符。累加器操作符允许您在聚合过程中对文档的字段进行累加、平均、最小值、最大值、首个值、最后一个值等操作。以下是一些常用的累加器操作符以及它们的用途：</p>
+<ol>
+<li><p><code>$sum</code>: 对指定字段的值进行求和计算。</p>
+<ul>
+<li>用途：计算某个字段的总和，例如订单金额的总和等。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.locations.aggregate([<br>  &#123;<br>    $<span class="hljs-keyword">group</span>: &#123;<br>      _id: <span class="hljs-keyword">null</span>, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 由于我们希望对整个集合中的文档进行聚合，因此将 _id 设置为 <span class="hljs-keyword">null</span><br>      totalDistance: &#123; $sum: &quot;$distance&quot; &#125;,<br> 	  count: &#123;$sum: <span class="hljs-number">1</span>&#125;, <span class="hljs-comment">-- 文档数量</span><br>    &#125;<br>  &#125;<br>])<br></code></pre></td></tr></table></figure>
+
+<p>后续大同小异，类似与Group By</p>
+</li>
+<li><p><code>$avg</code>: 对指定字段的值进行平均计算。</p>
+<ul>
+<li>用途：计算某个字段的平均值，例如订单价格的平均值等。</li>
+</ul>
+</li>
+<li><p><code>$min</code>: 获取指定字段的最小值。</p>
+<ul>
+<li>用途：获取某个字段的最小值，例如订单中的最低价格等。</li>
+</ul>
+</li>
+<li><p><code>$max</code>: 获取指定字段的最大值。</p>
+<ul>
+<li>用途：获取某个字段的最大值，例如订单中的最高价格等。</li>
+</ul>
+</li>
+<li><p><code>$first</code>: 获取每个分组中指定字段的首个值。</p>
+<ul>
+<li>用途：获取每个分组中某个字段的首个值，例如获取每个用户的首次购买时间等。</li>
+</ul>
+</li>
+<li><p><code>$last</code>: 获取每个分组中指定字段的最后一个值。</p>
+<ul>
+<li>用途：获取每个分组中某个字段的最后一个值，例如获取每个用户的最后一次购买时间等。</li>
+</ul>
+</li>
+</ol>
+<h1 id="6-关键字"><a href="#6-关键字" class="headerlink" title="6. 关键字"></a>6. 关键字</h1><h1 id="7-排序"><a href="#7-排序" class="headerlink" title="7. 排序"></a>7. 排序</h1><h1 id="8-索引"><a href="#8-索引" class="headerlink" title="8. 索引"></a>8. 索引</h1><h1 id="9-聚合"><a href="#9-聚合" class="headerlink" title="9. 聚合"></a>9. 聚合</h1><h1 id="10-监控、备份、恢复、分片"><a href="#10-监控、备份、恢复、分片" class="headerlink" title="10. 监控、备份、恢复、分片"></a>10. 监控、备份、恢复、分片</h1>
                 
               </div>
             
