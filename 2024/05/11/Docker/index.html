@@ -24,6 +24,8 @@
 <meta property="og:description" content="Docker 官方文档地址:https:&#x2F;&#x2F;www.docker.com&#x2F;get-started 中文参考手册:https:&#x2F;&#x2F;docker_practice.gitee.io&#x2F;zh-cn&#x2F;  1. Docker的基本概念1.1 什么是DockerDocker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/pwU9rfo.png">
+<meta property="og:image" content="https://i.imgur.com/k9kZxJn.png">
+<meta property="og:image" content="https://i.imgur.com/6t0ZMvR.png">
 <meta property="og:image" content="https://i.imgur.com/qULQy2h.png">
 <meta property="og:image" content="https://i.imgur.com/mYIKz3o.png">
 <meta property="og:image" content="https://i.imgur.com/teEfIcy.png">
@@ -34,7 +36,7 @@
 <meta property="og:image" content="https://i.imgur.com/C9PS4pG.jpeg">
 <meta property="og:image" content="https://i.imgur.com/CxmN9fd.png">
 <meta property="article:published_time" content="2024-05-11T12:52:00.000Z">
-<meta property="article:modified_time" content="2024-05-23T15:43:48.427Z">
+<meta property="article:modified_time" content="2024-05-28T14:05:04.043Z">
 <meta property="article:author" content="phoenix">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="微服物">
@@ -234,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.3k words
+          5.5k words
         
       </span>
     
@@ -245,7 +247,7 @@
         
         
         
-          45 mins
+          46 mins
         
       </span>
     
@@ -367,8 +369,16 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo yum install -y yum-utils<br>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo <span class="hljs-comment"># 国内可能无法使用 可以使用下面的镜像源</span><br><span class="hljs-comment"># sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>安装Docker</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>兼容性卸载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 卸载旧版本的docker</span><br>yum remove docker \<br>           docker-client \<br>           docker-client-latest \<br>           docker-common \<br>           docker-latest \<br>           docker-latest-logrotate \<br>           docker-logrotate \<br>           docker-selinux \<br>           docker-engine-selinux \<br>           docker-engine<br><span class="hljs-comment"># 卸载新版本的docker（叫docker-ce）</span><br>yum remove docker-ce \<br>           docker-ce-cli \<br>           containerd<br><br><span class="hljs-comment"># 停止删除服务</span><br>systemctl stop docker<br><span class="hljs-built_in">rm</span> -rf /etc/systemd/system/docker.service.d<br><span class="hljs-built_in">rm</span> -rf /etc/systemd/system/docker.service<br><span class="hljs-built_in">rm</span> -rf /var/lib/docker<br><span class="hljs-built_in">rm</span> -rf /var/run/docker<br><span class="hljs-built_in">rm</span> -rf /usr/local/docker<br><span class="hljs-built_in">rm</span> -rf /etc/docker<br><span class="hljs-built_in">rm</span> -rf /usr/bin/docker* /usr/bin/containerd* /usr/bin/runc /usr/bin/ctr<br></code></pre></td></tr></table></figure>
+
+<p>删除之后再进行<strong>安装</strong>可能会遇到报错</p>
+<p><img src="https://i.imgur.com/k9kZxJn.png" srcset="/img/loading.gif" lazyload alt="image-20240528220125947"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看冲突的依赖包</span><br>yum list installed | grep docker<br><span class="hljs-comment"># 删除后安装其他指定版本</span><br>rpm -e docker-client.x86_64、rpm -e docker-common.x86_64<br></code></pre></td></tr></table></figure></li>
 </ul>
+<p>​	<img src="https://i.imgur.com/6t0ZMvR.png" srcset="/img/loading.gif" lazyload alt="image-20240528220350909"></p>
 <h2 id="3-Docker的核心架构"><a href="#3-Docker的核心架构" class="headerlink" title="3. Docker的核心架构"></a>3. Docker的核心架构</h2><p><img src="https://i.imgur.com/qULQy2h.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <ul>
 <li><code>镜像:</code> 一个镜像代表一个应用环境,他是一个只读的文件,如 mysql镜像,tomcat镜像,nginx镜像等</li>

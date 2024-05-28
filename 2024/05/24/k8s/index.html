@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://i.imgur.com/PrFUzIG.png">
 <meta property="og:image" content="https://i.imgur.com/8DFhA7Z.png">
 <meta property="article:published_time" content="2024-05-24T12:55:00.000Z">
-<meta property="article:modified_time" content="2024-05-28T13:38:40.033Z">
+<meta property="article:modified_time" content="2024-05-28T14:05:33.437Z">
 <meta property="article:author" content="phoenix">
 <meta property="article:tag" content="微服务">
 <meta property="article:tag" content="架构">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k words
+          2.1k words
         
       </span>
     
@@ -344,12 +344,11 @@
 </blockquote>
 <p>docker 安装参考 <a href="https://hailong-bot.github.io/2024/05/11/Docker/#2-Docker%E7%9A%84%E5%AE%89%E8%A3%85">安装Docker</a></p>
 <blockquote>
-<p>tips:  按照上述文档安装版本是最新版（最新版已经移除了对docker的支持）,可以使用下面的版本</p>
+<p>tips:  按照上述文档安装版本是最新版（最新版已经移除了对docker的支持）,可以使用下面的方法</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install -y docker-ce-20.10.7 docker-ce-cli-20.10.7 containerd.io-1.4.6<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo yum install -y yum-utils<br><br>sudo yum-config-manager \<br>--add-repo \<br>http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo<br><br>yum install -y docker-ce-20.10.7 docker-ce-cli-20.10.7  containerd.io-1.4.6<br></code></pre></td></tr></table></figure>
 
-
-
+<p>如果以前有docker，卸载之后安装指定版本遇到问题可以查看</p>
 <h3 id="1-安装kubeadm"><a href="#1-安装kubeadm" class="headerlink" title="1. 安装kubeadm"></a>1. 安装kubeadm</h3><ul>
 <li>一台兼容的Linux主机。k8s项目为基于Debian和Red Hat的Linux发行版以及一些不提供包管理器的发行版提供通用的指令</li>
 <li>每台机器2GB或则更多的RAM</li>
