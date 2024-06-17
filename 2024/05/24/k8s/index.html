@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
 
 
@@ -16,30 +16,41 @@
   <meta name="author" content="phoenix">
   <meta name="keywords" content="">
   
-    <meta name="description" content="kubernetes1. 是什么  我们急需一个大规模容器编排系统  kubernetes具有以下特性：  服务发现和负载均衡Kubernetes 可以使用 DNS 名称或自己的 IP 地址公开容器，如果进入容器的流量很大， Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。 存储编排Kubernetes 允许你自动挂载你选择的存储系统，例如本地存储、公共云提供商等。 自动部署和回">
+    <meta name="description" content="kubernetes1. 安装1. 环境准备1. 主机准备2. 硬件配置   角色 主机名 CPU（推荐4C+） Memorty（推荐8G+） Disk（推荐512G）    master k8s-master 3C 4G 50G   node k8s-node1 3C 4G 50G   node k8s-node2 3C 4G 50G   3. 操作系统CentOS7， 内核版本5.4 查看内核">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kubernetes">
 <meta property="og:url" content="https://hailong-bot.github.io/2024/05/24/k8s/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="kubernetes1. 是什么  我们急需一个大规模容器编排系统  kubernetes具有以下特性：  服务发现和负载均衡Kubernetes 可以使用 DNS 名称或自己的 IP 地址公开容器，如果进入容器的流量很大， Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。 存储编排Kubernetes 允许你自动挂载你选择的存储系统，例如本地存储、公共云提供商等。 自动部署和回">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.imgur.com/lClszRj.png">
-<meta property="og:image" content="https://i.imgur.com/PrFUzIG.png">
+<meta property="og:site_name" content="hailong-bot">
+<meta property="og:description" content="kubernetes1. 安装1. 环境准备1. 主机准备2. 硬件配置   角色 主机名 CPU（推荐4C+） Memorty（推荐8G+） Disk（推荐512G）    master k8s-master 3C 4G 50G   node k8s-node1 3C 4G 50G   node k8s-node2 3C 4G 50G   3. 操作系统CentOS7， 内核版本5.4 查看内核">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/8DFhA7Z.png">
+<meta property="og:image" content="https://i.imgur.com/QTdroCr.png">
+<meta property="og:image" content="https://i.imgur.com/RYcRvuP.png">
+<meta property="og:image" content="https://i.imgur.com/MIZI4F7.png">
+<meta property="og:image" content="https://i.imgur.com/6Mibzzg.png">
+<meta property="og:image" content="https://i.imgur.com/YrQePkv.png">
+<meta property="og:image" content="https://i.imgur.com/YcAXZkt.png">
+<meta property="og:image" content="https://i.imgur.com/PdMRenJ.png">
+<meta property="og:image" content="https://i.imgur.com/uXqvULX.png">
+<meta property="og:image" content="https://i.imgur.com/zLUNgHk.png">
+<meta property="og:image" content="https://i.imgur.com/iK9WmTa.png">
+<meta property="og:image" content="https://i.imgur.com/510ylPF.png">
+<meta property="og:image" content="https://i.imgur.com/7vpnP5A.png">
+<meta property="og:image" content="https://i.imgur.com/HKv5M81.png">
 <meta property="article:published_time" content="2024-05-24T12:55:00.000Z">
-<meta property="article:modified_time" content="2024-05-28T14:08:44.089Z">
+<meta property="article:modified_time" content="2024-06-17T06:17:43.375Z">
 <meta property="article:author" content="phoenix">
 <meta property="article:tag" content="微服务">
 <meta property="article:tag" content="架构">
 <meta property="article:tag" content="kubernetes">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i.imgur.com/lClszRj.png">
+<meta name="twitter:image" content="https://i.imgur.com/8DFhA7Z.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>kubernetes - Hexo</title>
+  <title>kubernetes - hailong-bot</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -77,7 +88,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"hailong-bot.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"hailong-bot.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -120,11 +131,23 @@
           
           
           
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Home</span>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Go系列</span>
               </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/Go%E7%B3%BB%E5%88%97/Go%E8%BF%9B%E9%98%B6%E8%AE%AD%E7%BB%83%E8%90%A5" target="_self">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>Go进阶训练营</span>
+                  </a>
+                
+              </div>
             </li>
           
         
@@ -135,31 +158,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>Archives</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Categories</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Tags</span>
+                <span>归档</span>
               </a>
             </li>
           
@@ -171,7 +170,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>About</span>
+                <span>关于</span>
               </a>
             </li>
           
@@ -217,7 +216,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2024-05-24 20:55" pubdate>
-          May 24, 2024 pm
+          2024年5月24日 晚上
         </time>
       </span>
     
@@ -228,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k words
+          2.4k 字
         
       </span>
     
@@ -239,7 +238,7 @@
         
         
         
-          18 mins
+          20 分钟
         
       </span>
     
@@ -269,6 +268,21 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+</div>
+
+
+  </aside>
+
 
     </div>
 
@@ -281,61 +295,119 @@
             
               <div class="markdown-body">
                 
-                <h1 id="kubernetes"><a href="#kubernetes" class="headerlink" title="kubernetes"></a>kubernetes</h1><h2 id="1-是什么"><a href="#1-是什么" class="headerlink" title="1. 是什么"></a>1. 是什么</h2><p><img src="https://i.imgur.com/lClszRj.png" srcset="/img/loading.gif" lazyload alt="image-20240524211228085"></p>
+                <h1 id="kubernetes"><a href="#kubernetes" class="headerlink" title="kubernetes"></a>kubernetes</h1><h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><h3 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1. 环境准备"></a>1. 环境准备</h3><h4 id="1-主机准备"><a href="#1-主机准备" class="headerlink" title="1. 主机准备"></a>1. 主机准备</h4><h4 id="2-硬件配置"><a href="#2-硬件配置" class="headerlink" title="2. 硬件配置"></a>2. 硬件配置</h4><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>主机名</th>
+<th>CPU（推荐4C+）</th>
+<th>Memorty（推荐8G+）</th>
+<th>Disk（推荐512G）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>master</td>
+<td>k8s-master</td>
+<td>3C</td>
+<td>4G</td>
+<td>50G</td>
+</tr>
+<tr>
+<td>node</td>
+<td>k8s-node1</td>
+<td>3C</td>
+<td>4G</td>
+<td>50G</td>
+</tr>
+<tr>
+<td>node</td>
+<td>k8s-node2</td>
+<td>3C</td>
+<td>4G</td>
+<td>50G</td>
+</tr>
+</tbody></table>
+<h4 id="3-操作系统"><a href="#3-操作系统" class="headerlink" title="3. 操作系统"></a>3. 操作系统</h4><p>CentOS7， 内核版本5.4</p>
+<p>查看内核</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -rs<br>Linux 3.10.0-1127.el7.x86_64<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-主机IP地址"><a href="#4-主机IP地址" class="headerlink" title="4. 主机IP地址"></a>4. 主机IP地址</h4><p>虚拟机使用NAT和桥接的方式</p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>主机名</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>master</td>
+<td>k8s-master</td>
+<td>192.168.50.160</td>
+</tr>
+<tr>
+<td>node</td>
+<td>k8s-node1</td>
+<td>192.168.50.161</td>
+</tr>
+<tr>
+<td>node</td>
+<td>k8s-node2</td>
+<td>192.168.50.162</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># vi ifcfg-ens03</span><br>BOOTPROTO=<span class="hljs-string">&quot;static&quot;</span><br>ONBOOT=<span class="hljs-string">&quot;yes&quot;</span><br>IPADDR=<span class="hljs-string">&quot;192.168.50.160&quot;</span><br>PREFIX=<span class="hljs-string">&quot;24&quot;</span><br>GATEWAY=<span class="hljs-string">&quot;192.168.50.2&quot;</span><br>DNS1=<span class="hljs-string">&quot;119.29.29.29&quot;</span><br></code></pre></td></tr></table></figure>
+
 <blockquote>
-<p>我们急需一个大规模容器编排系统</p>
+<p>可查看下<strong>注意</strong></p>
 </blockquote>
-<p>kubernetes具有以下特性：</p>
+<h4 id="5-主机名配置"><a href="#5-主机名配置" class="headerlink" title="5. 主机名配置"></a>5. 主机名配置</h4><p>三台主机都要配置各自的主机名:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># k8s-master</span><br>hostnamectl set-hostname k8s-master<br><span class="hljs-comment"># k8s-node1</span><br>hostnamectl set-hostname k8s-node1<br><span class="hljs-comment"># k8s-node2</span><br>hostnamectl set-hostname k8s-node2<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-主机名与IP地址解析"><a href="#6-主机名与IP地址解析" class="headerlink" title="6.主机名与IP地址解析"></a>6.主机名与IP地址解析</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 每台主机都需要设置</span><br>vi /etc/hosts<br><br>192.168.50.160 k8s-master<br>192.168.50.161 k8s-node1<br>192.168.50.162 k8s-node2<br></code></pre></td></tr></table></figure>
+
+<h4 id="7-时间同步"><a href="#7-时间同步" class="headerlink" title="7. 时间同步"></a>7. 时间同步</h4><blockquote>
+<p>可以不操作 可安装ntpdate</p>
+</blockquote>
+<h4 id="8-关闭防火墙（开发阶段）"><a href="#8-关闭防火墙（开发阶段）" class="headerlink" title="8. 关闭防火墙（开发阶段）"></a>8. 关闭防火墙（开发阶段）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl stop firewalld.service<br>systemctl <span class="hljs-built_in">disable</span> firewalld.service<br></code></pre></td></tr></table></figure>
+
+<h4 id="9-关闭SeLinux（开发阶段）"><a href="#9-关闭SeLinux（开发阶段）" class="headerlink" title="9. 关闭SeLinux（开发阶段）"></a>9. 关闭SeLinux（开发阶段）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs BASH"><span class="hljs-comment"># 将 SELinux 设置为 permissive 模式（相当于将其禁用） 相当于关闭安全策略</span><br>sudo setenforce 0<br>sudo sed -i <span class="hljs-string">&#x27;s/^SELINUX=enforcing$/SELINUX=permissive/&#x27;</span> /etc/selinux/config	<br></code></pre></td></tr></table></figure>
+
+<h4 id="10-内网转发及网桥过滤"><a href="#10-内网转发及网桥过滤" class="headerlink" title="10. 内网转发及网桥过滤"></a>10. 内网转发及网桥过滤</h4><p>三台主机做相同操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 加载br_netfilter模块</span><br>$ modprobe br_netfilter<br><br><span class="hljs-comment"># 加载br_netfilter模块</span><br>$ modprobe br_netfilter<br><br><span class="hljs-comment"># 查看是否加载</span><br>$ lsmod | grep br_netfilter<br>br_netfilter           22256  0<br>bridge                151336  1 br_netfilter<br><br><span class="hljs-comment">#允许 iptables 检查桥接流量 官方要求</span><br><span class="hljs-built_in">cat</span> &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/modules-load.d/k8s.conf</span><br><span class="hljs-string">br_netfilter</span><br><span class="hljs-string">EOF</span><br><br><span class="hljs-built_in">cat</span> &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/sysctl.d/k8s.conf</span><br><span class="hljs-string">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="hljs-string">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="hljs-string">EOF</span><br><br><span class="hljs-comment"># 让上面的配置生效</span><br>sudo sysctl --system<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="11-安装ipset及ipvsadm"><a href="#11-安装ipset及ipvsadm" class="headerlink" title="11.安装ipset及ipvsadm"></a>11.安装ipset及ipvsadm</h4><blockquote>
+<p> 可以不执行</p>
+</blockquote>
+<p>三台主机做相同操作：</p>
 <ul>
-<li><strong>服务发现和负载均衡</strong><br>Kubernetes 可以使用 DNS 名称或自己的 IP 地址公开容器，如果进入容器的流量很大， Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。</li>
-<li><strong>存储编排</strong><br>Kubernetes 允许你自动挂载你选择的存储系统，例如本地存储、公共云提供商等。</li>
-<li><strong>自动部署和回滚</strong><br>你可以使用 Kubernetes 描述已部署容器的所需状态，它可以以受控的速率将实际状态 更改为期望状态。例如，你可以自动化 Kubernetes 来为你的部署创建新容器， 删除现有容器并将它们的所有资源用于新容器。</li>
-<li><strong>自动完成装箱计算</strong><br>Kubernetes 允许你指定每个容器所需 CPU 和内存（RAM）。 当容器指定了资源请求时，Kubernetes 可以做出更好的决策来管理容器的资源。</li>
-<li><strong>自我修复</strong><br>Kubernetes 重新启动失败的容器、替换容器、杀死不响应用户定义的 运行状况检查的容器，并且在准备好服务之前不将其通告给客户端。</li>
-<li><strong>密钥与配置管理</strong><br>Kubernetes 允许你存储和管理敏感信息，例如密码、OAuth 令牌和 ssh 密钥。 你可以在不重建容器镜像的情况下部署和更新密钥和应用程序配置，也无需在堆栈配置中暴露密钥。</li>
+<li><p>ipset，ipset 是一个基于内核的数据结构，它可以用于管理 iptables 规则。</p>
+</li>
+<li><p>ipvsadm，ipvsadm是LVS在应用层的管理命令，我们可以通过这个命令去管理LVS的配置。</p>
+</li>
 </ul>
-<h2 id="2-架构"><a href="#2-架构" class="headerlink" title="2. 架构"></a>2. 架构</h2><h3 id="2-1-工作方式"><a href="#2-1-工作方式" class="headerlink" title="2.1 工作方式"></a>2.1 工作方式</h3><p>Kubernetes <strong>Cluster</strong> <strong>&#x3D;</strong> N <strong>Master</strong> Node <strong>+</strong> N <strong>Worker</strong> Node：N主节点+N工作节点； N&gt;&#x3D;1</p>
-<h3 id="2-2-组件架构"><a href="#2-2-组件架构" class="headerlink" title="2.2 组件架构"></a>2.2 组件架构</h3><p><img src="https://i.imgur.com/PrFUzIG.png" srcset="/img/loading.gif" lazyload alt="image-20240524211552067"></p>
-<h4 id="2-2-1-控制平面组件（Control-Plane-Components）"><a href="#2-2-1-控制平面组件（Control-Plane-Components）" class="headerlink" title="2.2.1 控制平面组件（Control Plane Components）"></a>2.2.1 控制平面组件（Control Plane Components）</h4><p>控制平面的组件对集群做出全局决策(比如调度)，以及检测和响应集群事件（例如，当不满足部署的 <code>replicas</code> 字段时，启动新的 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/">pod</a>）。</p>
-<p>控制平面组件可以在集群中的任何节点上运行。 然而，为了简单起见，设置脚本通常会在同一个计算机上启动所有控制平面组件， 并且不会在此计算机上运行用户容器。 请参阅<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/high-availability/">使用 kubeadm 构建高可用性集群</a> 中关于多 VM 控制平面设置的示例。</p>
-<h4 id="2-2-2-kube-apiserver"><a href="#2-2-2-kube-apiserver" class="headerlink" title="2.2.2 kube-apiserver"></a>2.2.2 kube-apiserver</h4><p>API 服务器是 Kubernetes <a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/reference/glossary/?all=true#term-control-plane">控制面</a>的组件， 该组件公开了 Kubernetes API。 API 服务器是 Kubernetes 控制面的前端。</p>
-<p>Kubernetes API 服务器的主要实现是 <a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/reference/command-line-tools-reference/kube-apiserver/">kube-apiserver</a>。 kube-apiserver 设计上考虑了水平伸缩，也就是说，它可通过部署多个实例进行伸缩。 你可以运行 kube-apiserver 的多个实例，并在这些实例之间平衡流量。</p>
-<h4 id="2-2-3-etcd"><a href="#2-2-3-etcd" class="headerlink" title="2.2.3 etcd"></a>2.2.3 etcd</h4><p>etcd 是兼具一致性和高可用性的键值数据库，可以作为保存 Kubernetes 所有集群数据的后台数据库。</p>
-<p>您的 Kubernetes 集群的 etcd 数据库通常需要有个备份计划。</p>
-<p>要了解 etcd 更深层次的信息，请参考 <a target="_blank" rel="noopener" href="https://etcd.io/docs/">etcd 文档</a>。</p>
-<h4 id="2-2-4-kube-scheduler"><a href="#2-2-4-kube-scheduler" class="headerlink" title="2.2.4 kube-scheduler"></a>2.2.4 kube-scheduler</h4><p>控制平面组件，负责监视新创建的、未指定运行<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/architecture/nodes/">节点（node）</a>的 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/">Pods</a>，选择节点让 Pod 在上面运行。</p>
-<p>调度决策考虑的因素包括单个 Pod 和 Pod 集合的资源需求、硬件&#x2F;软件&#x2F;策略约束、亲和性和反亲和性规范、数据位置、工作负载间的干扰和最后时限。</p>
-<h4 id="2-2-5-kube-controller-manager"><a href="#2-2-5-kube-controller-manager" class="headerlink" title="2.2.5 kube-controller-manager"></a>2.2.5 kube-controller-manager</h4><p>在主节点上运行 <a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/architecture/controller/">控制器</a> 的组件。</p>
-<p>从逻辑上讲，每个<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/architecture/controller/">控制器</a>都是一个单独的进程， 但是为了降低复杂性，它们都被编译到同一个可执行文件，并在一个进程中运行。</p>
-<p>这些控制器包括:</p>
-<ul>
-<li>节点控制器（Node Controller）: 负责在节点出现故障时进行通知和响应</li>
-<li>任务控制器（Job controller）: 监测代表一次性任务的 Job 对象，然后创建 Pods 来运行这些任务直至完成</li>
-<li>端点控制器（Endpoints Controller）: 填充端点(Endpoints)对象(即加入 Service 与 Pod)</li>
-<li>服务帐户和令牌控制器（Service Account &amp; Token Controllers）: 为新的命名空间创建默认帐户和 API 访问令牌</li>
-</ul>
-<h4 id="2-2-6-cloud-controller-manager"><a href="#2-2-6-cloud-controller-manager" class="headerlink" title="2.2.6 cloud-controller-manager"></a>2.2.6 cloud-controller-manager</h4><p>云控制器管理器是指嵌入特定云的控制逻辑的 <a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/reference/glossary/?all=true#term-control-plane">控制平面</a>组件。 云控制器管理器允许您链接集群到云提供商的应用编程接口中， 并把和该云平台交互的组件与只和您的集群交互的组件分离开。</p>
-<p><code>cloud-controller-manager</code> 仅运行特定于云平台的控制回路。 如果你在自己的环境中运行 Kubernetes，或者在本地计算机中运行学习环境， 所部署的环境中不需要云控制器管理器。</p>
-<p>与 <code>kube-controller-manager</code> 类似，<code>cloud-controller-manager</code> 将若干逻辑上独立的 控制回路组合到同一个可执行文件中，供你以同一进程的方式运行。 你可以对其执行水平扩容（运行不止一个副本）以提升性能或者增强容错能力。</p>
-<p>下面的控制器都包含对云平台驱动的依赖：</p>
-<ul>
-<li>节点控制器（Node Controller）: 用于在节点终止响应后检查云提供商以确定节点是否已被删除</li>
-<li>路由控制器（Route Controller）: 用于在底层云基础架构中设置路由</li>
-<li>服务控制器（Service Controller）: 用于创建、更新和删除云提供商负载均衡器</li>
-</ul>
-<h4 id="2-2-7-Node组件"><a href="#2-2-7-Node组件" class="headerlink" title="2.2.7 Node组件"></a>2.2.7 Node组件</h4><p>节点组件在每个节点上运行，维护运行的 Pod 并提供 Kubernetes 运行环境。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ipset，ipset 是一个基于内核的数据结构，它可以用于管理 iptables 规则。<br>ipvsadm，ipvsadm是LVS在应用层的管理命令，我们可以通过这个命令去管理LVS的配置。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 配置ipvsadm模块加载方式 </span><br><span class="hljs-comment"># 添加需要加载的模块 </span><br>$ <span class="hljs-built_in">cat</span> &gt; /etc/sysconfig/modules/ipvs.modules &lt;&lt;<span class="hljs-string">EOF </span><br><span class="hljs-string">#!/bin/bash </span><br><span class="hljs-string">modprobe -- ip_vs </span><br><span class="hljs-string">modprobe -- ip_vs_rr </span><br><span class="hljs-string">modprobe -- ip_vs_wrr </span><br><span class="hljs-string">modprobe -- ip_vs_sh </span><br><span class="hljs-string">modprobe -- nf_conntrack EOF</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 授权、运行、检查是否加载</span><br>$ <span class="hljs-built_in">chmod</span> 755 /etc/sysconfig/modules/ipvs.modules <br>$ bash /etc/sysconfig/modules/ipvs.modules<br>$ lsmod | grep -e ip_vs -e nf_conntrack<br></code></pre></td></tr></table></figure>
+
+<h4 id="12-关闭Swap分区"><a href="#12-关闭Swap分区" class="headerlink" title="12.关闭Swap分区"></a>12.关闭Swap分区</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">swapoff -a  <br>sed -ri <span class="hljs-string">&#x27;s/.*swap.*/#&amp;/&#x27;</span> /etc/fstab<br></code></pre></td></tr></table></figure>
+
+<h4 id="13-附内核升级"><a href="#13-附内核升级" class="headerlink" title="13. 附内核升级"></a>13. 附内核升级</h4><blockquote>
+<p>yum方式</p>
+</blockquote>
 <ol>
-<li><p>kubelet</p>
-<p>一个在集群中每个<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/architecture/nodes/">节点（node）</a>上运行的代理。 它保证<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/overview/what-is-kubernetes/#why-containers">容器（containers）</a>都 运行在 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/">Pod</a> 中。</p>
-<p>kubelet 接收一组通过各类机制提供给它的 PodSpecs，确保这些 PodSpecs 中描述的容器处于运行状态且健康。 kubelet 不会管理不是由 Kubernetes 创建的容器。</p>
+<li><p>安装新版本内核</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在 CentOS 7 上启用 ELRepo 仓库，是一个第三方仓库，可以将内核升级到最新版本</span><br><br><span class="hljs-comment"># 1.导入该源的秘钥</span><br>rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org<br><br><span class="hljs-comment"># 2.启用该源仓库</span><br>rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm<br><br><span class="hljs-comment"># 3.查看有哪些内核版本可供安装（可选）</span><br><span class="hljs-comment"># ml 主线版本，相对更新更激进</span><br><span class="hljs-comment"># lt 长期支持版本，相对更稳定</span><br>yum --disablerepo=<span class="hljs-string">&quot;*&quot;</span> --enablerepo=<span class="hljs-string">&quot;elrepo-kernel&quot;</span> list available<br><br><span class="hljs-comment"># 4.安装内核，选择LT版本</span><br>yum --enablerepo=elrepo-kernel install kernel-lt<br><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>kube-proxy</p>
-<p><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/reference/command-line-tools-reference/kube-proxy/">kube-proxy</a> 是集群中每个节点上运行的网络代理， 实现 Kubernetes <a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/services-networking/service/">服务（Service）</a> 概念的一部分。</p>
-<p>kube-proxy 维护节点上的网络规则。这些网络规则允许从集群内部或外部的网络会话与 Pod 进行网络通信。</p>
-<p>如果操作系统提供了数据包过滤层并可用的话，kube-proxy 会通过它来实现网络规则。否则， kube-proxy 仅转发流量本身。</p>
+<li><p>设置GRUP默认的内核版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 编辑grub文件</span><br>vi /etc/default/grub<br><br><span class="hljs-comment"># 设置 GRUB_DEFAULT=0</span><br>GRUB_DEFAULT=0<br><br><span class="hljs-comment"># 2. 生成引导文件</span><br>grub2-mkconfig -o /boot/grub2/grub.cfg<br><br></code></pre></td></tr></table></figure>
 </li>
+<li><p>重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">reboot <span class="hljs-comment"># 测试 </span><br><span class="hljs-built_in">uname</span> -rs<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="3-安装"><a href="#3-安装" class="headerlink" title="3. 安装"></a>3. 安装</h2><p><img src="https://i.imgur.com/8DFhA7Z.png" srcset="/img/loading.gif" lazyload alt="image-20240528204523510"></p>
+<h2 id="2-Docker-安装"><a href="#2-Docker-安装" class="headerlink" title="2. Docker 安装"></a>2. Docker 安装</h2><p><img src="https://i.imgur.com/8DFhA7Z.png" srcset="/img/loading.gif" lazyload alt="image-20240528204523510"></p>
 <blockquote>
 <p>前提条件 每台服务器都需要安装docker </p>
 <p>kubelet</p>
@@ -346,10 +418,30 @@
 <blockquote>
 <p>tips:  按照上述文档安装版本是最新版（最新版已经移除了对docker的支持）,可以使用下面的方法</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo yum install -y yum-utils<br><br>sudo yum-config-manager \<br>--add-repo \<br>http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo<br><br>yum install -y docker-ce-20.10.7 docker-ce-cli-20.10.7  containerd.io-1.4.6<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo yum install -y yum-utils<br><br>sudo yum-config-manager \<br>--add-repo \<br>http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo<br><br><br>yum list docker-ce --showduplicates | <span class="hljs-built_in">sort</span> -r<br>yum install -y docker-ce-20.10.7 docker-ce-cli-20.10.7  containerd.io-1.4.6<br></code></pre></td></tr></table></figure>
 
 <p>如果以前有docker，卸载之后安装指定版本遇到问题可以查看<a href="https://hailong-bot.github.io/2024/05/11/Docker/#2-Docker%E7%9A%84%E5%AE%89%E8%A3%85">卸载Docker并重新安装</a></p>
-<h3 id="1-安装kubeadm"><a href="#1-安装kubeadm" class="headerlink" title="1. 安装kubeadm"></a>1. 安装kubeadm</h3><ul>
+<p><strong>配置加速</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">mkdir</span> -p /etc/docker<br>sudo <span class="hljs-built_in">tee</span> /etc/docker/daemon.json &lt;&lt;-<span class="hljs-string">&#x27;EOF&#x27;</span><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://lz2nib3q.mirror.aliyuncs.com&quot;</span>],<br>  <span class="hljs-string">&quot;exec-opts&quot;</span>: [<span class="hljs-string">&quot;native.cgroupdriver=systemd&quot;</span>],<br>  <span class="hljs-string">&quot;log-driver&quot;</span>: <span class="hljs-string">&quot;json-file&quot;</span>,<br>  <span class="hljs-string">&quot;log-opts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;max-size&quot;</span>: <span class="hljs-string">&quot;100m&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;storage-driver&quot;</span>: <span class="hljs-string">&quot;overlay2&quot;</span><br>&#125;<br>EOF<br>sudo systemctl daemon-reload<br>sudo systemctl restart docker<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-cri环境安装"><a href="#3-cri环境安装" class="headerlink" title="3. cri环境安装"></a>3. cri环境安装</h2><blockquote>
+<p>所有主机操作</p>
+</blockquote>
+<p>获取软件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> /data/softs -p &amp;&amp; <span class="hljs-built_in">cd</span> /data/softs<br>wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.2/cri-dockerd-0.3.2.amd64.tgz<br><br>tar xf cri-dockerd-0.3.2.amd64.tgz<br><span class="hljs-built_in">mv</span> cri-dockerd/cri-dockerd /usr/local/bin<br><br>cri-dockerd --version<br></code></pre></td></tr></table></figure>
+
+<p>定制配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &gt; /etc/systemd/system/cri-dockerd.service&lt;&lt;<span class="hljs-string">EOF</span><br><span class="hljs-string">[unit]</span><br><span class="hljs-string">Description=CRI Interface Docker Application Container Engin</span><br><span class="hljs-string">Document=https://docs.mirantis.com</span><br><span class="hljs-string">After=network-online.target firewalld.service docker.service</span><br><span class="hljs-string">Wants=network-online.target</span><br><span class="hljs-string">[service]</span><br><span class="hljs-string">Type=notify</span><br><span class="hljs-string">ExecStart=/usr/local/bin/cri-dockerd --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.9 --network-plugin=cni --cni-conf-dir=/etc/cni/net.d ---cni-bin-dir=/opt/cni/bin --container-runtime--endpoint=unix:///var/run/cri-dockerd.sock --cri-dockerd-root-directory=/var/lib/dockershim --docker-endpoint=unix:///var/run/docker.sock --cri-dockerd-root-directory=var/lib/docker</span><br><span class="hljs-string">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="hljs-string">TimeoutSec=0</span><br><span class="hljs-string">RestartSec=2</span><br><span class="hljs-string">Restart=always</span><br><span class="hljs-string">StartLimitBurst=3</span><br><span class="hljs-string">StartLimitInterval=60s</span><br><span class="hljs-string">LimitNOFILE=infinity</span><br><span class="hljs-string">LimitNPROC=infinity</span><br><span class="hljs-string">LimitCORE=infinity</span><br><span class="hljs-string">TasksMax=infinity</span><br><span class="hljs-string">Delegate=yes</span><br><span class="hljs-string">KillMode=process</span><br><span class="hljs-string">[Install]</span><br><span class="hljs-string">WantedBy=multi-user.target</span><br><span class="hljs-string">EOF</span><br></code></pre></td></tr></table></figure>
+
+<p>定制配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &gt; /etc/systemd/system/cri-dockerd.socket &lt;&lt; -EOF<br>[Unit]<br>Description=CRI Docker Socket <span class="hljs-keyword">for</span> the API<br>PartOf=cri-docker.service<br><br>[Socket]<br>ListenStream=/var/run/cri-dockerd.sock<br>SocketMode=0660<br>SocketUser=root<br>SocketGroup=docker<br><br>[Install]<br>WantedBy=sockets.target<br>EOF<br></code></pre></td></tr></table></figure>
+
+<p>设置开机启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl daemon-reload<br>systemctl <span class="hljs-built_in">enable</span> cri-dockerd.service<br>systemctl restart cri-dockerd.service<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-安装kubeadm"><a href="#3-安装kubeadm" class="headerlink" title="3. 安装kubeadm"></a>3. 安装kubeadm</h2><ul>
 <li>一台兼容的Linux主机。k8s项目为基于Debian和Red Hat的Linux发行版以及一些不提供包管理器的发行版提供通用的指令</li>
 <li>每台机器2GB或则更多的RAM</li>
 <li>2核或更多</li>
@@ -370,13 +462,141 @@
 </ul>
 </li>
 </ul>
-<h4 id="1-基础环境"><a href="#1-基础环境" class="headerlink" title="1. 基础环境"></a>1. 基础环境</h4><blockquote>
-<p>为所有机器执行以下操作</p>
+<h4 id="2-安装kubelet、kubeadm、kubectl"><a href="#2-安装kubelet、kubeadm、kubectl" class="headerlink" title="2. 安装kubelet、kubeadm、kubectl"></a>2. 安装kubelet、kubeadm、kubectl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/yum.repos.d/kubernetes.repo</span><br><span class="hljs-string">[kubernetes]</span><br><span class="hljs-string">name=Kubernetes</span><br><span class="hljs-string">baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="hljs-string">enabled=1</span><br><span class="hljs-string">gpgcheck=0</span><br><span class="hljs-string">repo_gpgcheck=0</span><br><span class="hljs-string">gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</span><br><span class="hljs-string">   http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="hljs-string">exclude=kubelet kubeadm kubectl</span><br><span class="hljs-string">EOF</span><br><br><br>sudo yum install -y kubelet-1.20.9 kubeadm-1.20.9 kubectl-1.20.9 --disableexcludes=kubernetes<br><br><span class="hljs-comment"># sudo systemctl start kubelet</span><br>sudo systemctl <span class="hljs-built_in">enable</span> --now kubelet<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>kbelet 现在每隔几秒就会重启，因为它陷入了一个等待 kubeadm 指令的死循环</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 各个机器设置自己的主机名</span><br>hostnamectl set-hostname xxx<br><span class="hljs-comment"># 查看当前主机主机名 </span><br>hostname<br><br><span class="hljs-comment"># 将 SELinux 设置为 permissive 模式（相当于将其禁用） 相当于关闭安全策略</span><br>sudo setenforce 0<br>sudo sed -i <span class="hljs-string">&#x27;s/^SELINUX=enforcing$/SELINUX=permissive/&#x27;</span> /etc/selinux/config<br><br><span class="hljs-comment">#关闭swap</span><br>swapoff -a  <br>sed -ri <span class="hljs-string">&#x27;s/.*swap.*/#&amp;/&#x27;</span> /etc/fstab<br><br><br><span class="hljs-comment">#允许 iptables 检查桥接流量 官方要求</span><br><span class="hljs-built_in">cat</span> &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/modules-load.d/k8s.conf</span><br><span class="hljs-string">br_netfilter</span><br><span class="hljs-string">EOF</span><br><br><span class="hljs-built_in">cat</span> &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/sysctl.d/k8s.conf</span><br><span class="hljs-string">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="hljs-string">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="hljs-string">EOF</span><br><br><span class="hljs-comment"># 让上面的配置生效</span><br>sudo sysctl --system<br></code></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/QTdroCr.png" srcset="/img/loading.gif" lazyload alt="image-20240530211759292"></p>
+<h3 id="3-使用kubeadm引导集群"><a href="#3-使用kubeadm引导集群" class="headerlink" title="3. 使用kubeadm引导集群"></a>3. 使用kubeadm引导集群</h3><ol>
+<li><p>下载各个机器所需要的镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">tee</span> ./images.sh &lt;&lt;-<span class="hljs-string">&#x27;EOF&#x27;</span><br><span class="hljs-comment">#!/bin/bash</span><br>images=(<br>kube-apiserver:v1.20.9<br>kube-proxy:v1.20.9<br>kube-controller-manager:v1.20.9<br>kube-scheduler:v1.20.9<br>coredns:1.7.0<br>etcd:3.4.13-0<br>pause:3.2<br>)<br><span class="hljs-keyword">for</span> imageName <span class="hljs-keyword">in</span> <span class="hljs-variable">$&#123;images[@]&#125;</span> ; <span class="hljs-keyword">do</span><br>docker pull registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images/<span class="hljs-variable">$imageName</span><br><span class="hljs-keyword">done</span><br>EOF<br><br><span class="hljs-built_in">chmod</span> +x ./images.sh &amp;&amp; ./images.sh<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>初始化主节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#所有机器添加master域名映射，以下需要修改为自己的</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;192.168.1.13  cluster-endpoint&quot;</span> &gt;&gt; /etc/hosts<br><br><br><br><span class="hljs-comment">#主节点初始化</span><br>kubeadm init \<br>--apiserver-advertise-address=192.168.1.13 \<br>--control-plane-endpoint=cluster-endpoint \<br>--image-repository registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images \<br>--kubernetes-version v1.20.9 \<br>--service-cidr=10.96.0.0/16 \<br>--pod-network-cidr=192.168.0.0/16<br><br><span class="hljs-comment">#所有网络范围不重叠</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="2-安装kubelet、kubeadm、kubectl"><a href="#2-安装kubelet、kubeadm、kubectl" class="headerlink" title="2. 安装kubelet、kubeadm、kubectl"></a>2. 安装kubelet、kubeadm、kubectl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &lt;&lt;<span class="hljs-string">EOF | sudo tee /etc/yum.repos.d/kubernetes.repo</span><br><span class="hljs-string">[kubernetes]</span><br><span class="hljs-string">name=Kubernetes</span><br><span class="hljs-string">baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="hljs-string">enabled=1</span><br><span class="hljs-string">gpgcheck=0</span><br><span class="hljs-string">repo_gpgcheck=0</span><br><span class="hljs-string">gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</span><br><span class="hljs-string">   http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="hljs-string">exclude=kubelet kubeadm kubectl</span><br><span class="hljs-string">EOF</span><br><br><br>sudo yum install -y kubelet-1.20.9 kubeadm-1.20.9 kubectl-1.20.9 --disableexcludes=kubernetes<br><br>sudo systemctl <span class="hljs-built_in">enable</span> --now kubelet<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#查看集群所有节点</span><br>kubectl get nodes<br><br><span class="hljs-comment">#根据配置文件，给集群创建资源</span><br>kubectl apply -f xxxx.yaml<br><br><span class="hljs-comment">#查看集群部署了哪些应用？</span><br>docker ps   ===   kubectl get pods -A<br><span class="hljs-comment"># 运行中的应用在docker里面叫容器，在k8s里面叫Pod</span><br>kubectl get pods -A<br></code></pre></td></tr></table></figure>
 
+
+
+<p><img src="https://i.imgur.com/RYcRvuP.png" srcset="/img/loading.gif" lazyload alt="image-20240530221255681"></p>
+</li>
+<li><p>根据提示后继续</p>
+<ol>
+<li><p>设置.kube&#x2F;config</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">Your Kubernetes control-plane has initialized successfully!<br><br>To start using your cluster, you need to run the following as a regular user:<br><br>  <span class="hljs-built_in">mkdir</span> -p <span class="hljs-variable">$HOME</span>/.kube<br>  sudo <span class="hljs-built_in">cp</span> -i /etc/kubernetes/admin.conf <span class="hljs-variable">$HOME</span>/.kube/config<br>  sudo <span class="hljs-built_in">chown</span> $(<span class="hljs-built_in">id</span> -u):$(<span class="hljs-built_in">id</span> -g) <span class="hljs-variable">$HOME</span>/.kube/config<br><br>Alternatively, <span class="hljs-keyword">if</span> you are the root user, you can run:<br><br>  <span class="hljs-built_in">export</span> KUBECONFIG=/etc/kubernetes/admin.conf<br><br>You should now deploy a pod network to the cluster.<br>Run <span class="hljs-string">&quot;kubectl apply -f [podnetwork].yaml&quot;</span> with one of the options listed at:<br>  https://kubernetes.io/docs/concepts/cluster-administration/addons/<br><br>You can now <span class="hljs-built_in">join</span> any number of control-plane nodes by copying certificate authorities<br>and service account keys on each node and <span class="hljs-keyword">then</span> running the following as root:<br><br>  kubeadm <span class="hljs-built_in">join</span> cluster-endpoint:6443 --token 8pkvsc.bulhmezj62f401ey \<br>    --discovery-token-ca-cert-hash sha256:aa9aef3416d190dde60b8323f1abf8a6beea8d7403bc50c229eeb3c5bdea434f \<br>    --control-plane<br><br>Then you can <span class="hljs-built_in">join</span> any number of worker nodes by running the following on each as root:<br><br>kubeadm <span class="hljs-built_in">join</span> cluster-endpoint:6443 --token 8pkvsc.bulhmezj62f401ey \<br>    --discovery-token-ca-cert-hash sha256:aa9aef3416d190dde60b8323f1abf8a6beea8d7403bc50c229eeb3c5bdea434f<br></code></pre></td></tr></table></figure>
+
+<p>复制上面命令即可</p>
+</li>
+<li><p>安装网络组件</p>
+<blockquote>
+<p>将所有的node通过网络组件串起来</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.projectcalico.org/getting-started/kubernetes/self-managed-onprem/onpremises#install-calico-with-kubernetes-api-datastore-more-than-50-nodes">calico官网</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl https://docs.projectcalico.org/v3.20/manifests/calico.yaml -O<br>kubectl apply -f calico.yaml<br></code></pre></td></tr></table></figure>
+
+<p>然后根据上面命令看看pod状态</p>
+<p><img src="https://i.imgur.com/MIZI4F7.png" srcset="/img/loading.gif" lazyload alt="image-20240530223210783"></p>
+</li>
+</ol>
+</li>
+<li><p>加入其他非master节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubeadm <span class="hljs-built_in">join</span> cluster-endpoint:6443 --token 8pkvsc.bulhmezj62f401ey \<br>    --discovery-token-ca-cert-hash sha256:aa9aef3416d190dde60b8323f1abf8a6beea8d7403bc50c229eeb3c5bdea434f<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/6Mibzzg.png" srcset="/img/loading.gif" lazyload alt="image-20240530223424621"></p>
+<blockquote>
+<p>新令牌</p>
+<p>kubeadm token create –print-join-command</p>
+</blockquote>
+</li>
+<li><p>验证集群</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl get nodes<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>部署dashboard</p>
+<ol>
+<li><p>部署</p>
+<blockquote>
+<p>kubernetes官方提供的可视化界面</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kubernetes/dashboard">https://github.com/kubernetes/dashboard</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>设置访问端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl edit svc kubernetes-dashboard -n kubernetes-dashboard<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>type: ClusterIP 改为 type: NodePort</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl get svc -A |grep kubernetes-dashboard<br><span class="hljs-comment">## 找到端口，在安全组放行</span><br></code></pre></td></tr></table></figure>
+
+<p>访问： https:&#x2F;&#x2F;集群任意IP:端口      <a target="_blank" rel="noopener" href="https://139.198.165.238:32759/">https://139.198.165.238:32759</a></p>
+<p><img src="https://i.imgur.com/YrQePkv.png" srcset="/img/loading.gif" lazyload alt="image-20240530225935130"></p>
+<blockquote>
+<p>如果发现无法正常启动的话可以查看</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44847649/article/details/123082308">帮助</a></p>
+</blockquote>
+<p>修改后的配置文件：</p>
+</li>
+<li><p>创建访问账号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#创建访问账号，准备一个yaml文件； vi dash.yaml</span><br>apiVersion: v1<br>kind: ServiceAccount<br>metadata:<br>  name: admin-user<br>  namespace: kubernetes-dashboard<br>---<br>apiVersion: rbac.authorization.k8s.io/v1<br>kind: ClusterRoleBinding<br>metadata:<br>  name: admin-user<br>roleRef:<br>  apiGroup: rbac.authorization.k8s.io<br>  kind: ClusterRole<br>  name: cluster-admin<br>subjects:<br>- kind: ServiceAccount<br>  name: admin-user<br>  namespace: kubernetes-dashboard<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl apply -f dash.yaml<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>令牌访问</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#获取访问令牌</span><br>kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath=<span class="hljs-string">&quot;&#123;.secrets[0].name&#125;&quot;</span>) -o go-template=<span class="hljs-string">&quot;&#123;&#123;.data.token | base64decode&#125;&#125;&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">eyJhbGciOiJSUzI1NiIsImtpZCI6IjIyUTk0bGk5Z1RyVTIyVnVIUjY1U2Fxc3hZQlBJb3ZnR2hGMHNObmI1dE0ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXhkdHJ2Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI2YTI1YzkzMi03ZjQ5LTQwYWUtOTU1NS1iYjZmYjFlZGU5YTEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.DzJ3ABE5QRljPT2NXZvQjHJ-cM-Zm33foNoWcE8GDaRhm_iliF3KOISOR9nXezCqIAhEzj3FLkCC2bqBU6S6cD9yHd5WZQ6EIFt9YMLEi6_ABWd1u9xxxKwtX8BzPBJWWC1g5F4quf4j0lu2m7ukMb8rNERZIzuDTmfygPw0O8iQcCghgYxV1RihCewhkcCKMAMYO7EEv9yq39qmb-3_X2Nt7NO9LJ7ZdfQE9xzslDLzEbm5gYnH91Ku6ZTC27azM1KVIIRtYCXwJq45Knm8ESIZDg8J0vYuek-IFAw7ku8XzdRWNWkhXlCzqenDnRRzcmkqQYXXGsNnaWkBkO8UUA<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>界面</p>
+<p><img src="https://i.imgur.com/YcAXZkt.png" srcset="/img/loading.gif" lazyload alt="image-20240531211440488"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="4-核心"><a href="#4-核心" class="headerlink" title="4. 核心"></a>4. 核心</h2><h3 id="1-Namespace"><a href="#1-Namespace" class="headerlink" title="1. Namespace"></a>1. Namespace</h3><blockquote>
+<p>名称空间用来隔离资源。默认只隔离资源，不隔离网络</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl create ns hello<br>kubectl delete ns hello<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Namespace</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">hello</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-Pod"><a href="#2-Pod" class="headerlink" title="2. Pod"></a>2. Pod</h3><blockquote>
+<p>Pod是Kubernetes中的最小部署单元，一个Pod可以包含一个或多个容器。Pod中的容器共享网络命名空间，可以通过localhost相互通信。Pod是临时的，当Pod失败时，Kubernetes会自动创建新的Pod以替代它们。</p>
+</blockquote>
+<p><img src="https://i.imgur.com/PdMRenJ.png" srcset="/img/loading.gif" lazyload alt="image-20240531213430661"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl run mynginx --image=nginx<br><br><span class="hljs-comment"># 查看default名称空间的Pod</span><br>kubectl get pod <br><span class="hljs-comment"># 描述</span><br>kubectl describe pod 你自己的Pod名字<br><span class="hljs-comment"># 删除</span><br>kubectl delete pod Pod名字<br><span class="hljs-comment"># 查看Pod的运行日志</span><br>kubectl logs Pod名字<br><br><span class="hljs-comment"># 每个Pod - k8s都会分配一个ip</span><br>kubectl get pod -owide<br><span class="hljs-comment"># 使用Pod的ip+pod里面运行容器的端口</span><br>curl 192.168.169.136<br><br><span class="hljs-comment"># 集群中的任意一个机器以及任意的应用都能通过Pod分配的ip来访问这个Pod</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">run:</span> <span class="hljs-string">mynginx</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">mynginx</span><br><span class="hljs-comment">#  namespace: default</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">nginx</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">mynginx</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">run:</span> <span class="hljs-string">myapp</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">myapp</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">nginx</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">nginx</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">tomcat:8.5.68</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">tomcat</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/uXqvULX.png" srcset="/img/loading.gif" lazyload alt="image-20240531214425806"></p>
+<p>此时的应还不能进行外部访问</p>
+<h3 id="3-Deployment"><a href="#3-Deployment" class="headerlink" title="3. Deployment"></a>3. Deployment</h3><h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>笔者使用虚拟机，但是虚拟机IP会发生改变，因此，笔者采用双网卡的方式，也就是虚拟机采用<strong>NAT网络+桥接网卡</strong>实现，桥接网卡是为了连接SSH，NAT设置静态IP</p>
+<p>具体操作如下：</p>
+<ol>
+<li><p>设置NAT网络</p>
+<p><img src="https://i.imgur.com/zLUNgHk.png" srcset="/img/loading.gif" lazyload alt="image-20240606215043833"></p>
+</li>
+<li><p>虚拟机设置双网卡方式</p>
+<p><img src="https://i.imgur.com/iK9WmTa.png" srcset="/img/loading.gif" lazyload alt="image-20240606215132875"></p>
+<p><img src="https://i.imgur.com/510ylPF.png" srcset="/img/loading.gif" lazyload alt="image-20240606215151935"></p>
+</li>
+<li><p>虚拟机IP设置</p>
+<p><img src="https://i.imgur.com/7vpnP5A.png" srcset="/img/loading.gif" lazyload alt="image-20240606215311944"></p>
+</li>
+<li><p>宿主机IP设置</p>
+<p><img src="https://i.imgur.com/HKv5M81.png" srcset="/img/loading.gif" lazyload alt="image-20240606215411453"></p>
+</li>
+<li><p>远程的时候连接桥接网卡分配的IP即可</p>
+</li>
+</ol>
 
                 
               </div>
@@ -428,13 +648,19 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/06/17/Go%E8%BF%9B%E9%98%B6%E8%AE%AD%E7%BB%83%E8%90%A5/week02/Go%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E6%88%98/" title="Go错误处理最佳实战">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Go错误处理最佳实战</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
                       <a href="/2024/05/11/GNULinux%20%E7%BB%88%E7%AB%AF%E4%B8%8B%E4%BD%BF%E7%94%A8%20Fish%20shell%20%E5%B9%B6%E7%BE%8E%E5%8C%96/" title="Fish Shell">
                         <span class="hidden-mobile">Fish Shell</span>
-                        <span class="visible-mobile">Next</span>
+                        <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -483,7 +709,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>Table of Contents</span>
+    <span>目录</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -517,8 +743,6 @@
 
 
 
-  
-
 
 
 
@@ -539,7 +763,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -547,7 +771,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -575,16 +799,16 @@
   
     
       <span id="busuanzi_container_site_pv" style="display: none">
-        Views: 
+        总访问量 
         <span id="busuanzi_value_site_pv"></span>
-        
+         次
       </span>
     
     
       <span id="busuanzi_container_site_uv" style="display: none">
-        Visitors: 
+        总访客数 
         <span id="busuanzi_value_site_uv"></span>
-        
+         人
       </span>
     
     
@@ -734,8 +958,6 @@
 </script>
 
 
-  <script>Fluid.plugins.imageCaption();</script>
-
   <script  src="/js/local-search.js" ></script>
 
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
@@ -752,7 +974,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
 </body>
 </html>
