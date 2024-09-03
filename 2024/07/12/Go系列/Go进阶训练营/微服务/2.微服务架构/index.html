@@ -47,8 +47,9 @@
 <meta property="og:image" content="https://i.imgur.com/z3kS4Y3.png">
 <meta property="og:image" content="https://i.imgur.com/fuOX8ur.png">
 <meta property="og:image" content="https://i.imgur.com/C6uVsIT.png">
+<meta property="og:image" content="https://i.imgur.com/graH4c1.png">
 <meta property="article:published_time" content="2024-07-12T12:52:00.000Z">
-<meta property="article:modified_time" content="2024-08-27T07:23:44.877Z">
+<meta property="article:modified_time" content="2024-09-03T07:41:00.010Z">
 <meta property="article:author" content="phoenix">
 <meta property="article:tag" content="Go进阶训练营">
 <meta name="twitter:card" content="summary_large_image">
@@ -267,7 +268,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          20k 字
+          21k 字
         
       </span>
     
@@ -278,7 +279,7 @@
         
         
         
-          170 分钟
+          172 分钟
         
       </span>
     
@@ -594,6 +595,7 @@
 <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ docker pull consul <span class="hljs-comment"># 默认拉取latest</span><br>$ docker pull consul:1.6.1 <span class="hljs-comment"># 拉取指定版本</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="安装并运行"><a href="#安装并运行" class="headerlink" title="安装并运行"></a>安装并运行</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">docker <span class="hljs-built_in">run</span> -d -p 8500:8500 -p 8600:8600 -v ~/consul/services:/consul/services <span class="hljs-attribute">--restart</span>=always <span class="hljs-attribute">--name</span>=consul consul:latest agent -server -bootstrap -ui <span class="hljs-attribute">-node</span>=1 <span class="hljs-attribute">-client</span>=<span class="hljs-string">&#x27;0.0.0.0&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">docker <span class="hljs-built_in">run</span> --rm -it <span class="hljs-attribute">--net</span>=host -v ~/consul/services:/consul/services <span class="hljs-attribute">--name</span>=consul consul:latest agent -dev -bootstrap -ui  -bind 172.22.1.11 <span class="hljs-attribute">-node</span>=1 <span class="hljs-attribute">-client</span>=<span class="hljs-string">&#x27;0.0.0.0&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>agent: 表示启动 Agent 进程。</li>
@@ -1743,18 +1745,29 @@
 <h3 id="Kong-快速配置基于-Consul-的转发服务"><a href="#Kong-快速配置基于-Consul-的转发服务" class="headerlink" title="Kong 快速配置基于 Consul 的转发服务"></a>Kong 快速配置基于 Consul 的转发服务</h3><p>利用 Kong 的 Admin API 来配置服务，完成对 product 服务的转发：</p>
 <p><img src="https://i.imgur.com/C6uVsIT.png" srcset="/img/loading.gif" lazyload alt="image-20240731214748233"></p>
 <h4 id="添加一个服务-service"><a href="#添加一个服务-service" class="headerlink" title="添加一个服务 service"></a>添加一个服务 service</h4><p>kong 的服务，就是网关需要转发的目标。通过 Admin API (:8001) 可以完成：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -i -X POST \<br>  --url http://localhost:8001/services/ \<br>  --data &#x27;name=product-service&#x27; \<br>  --data &#x27;url=http://product.service.consul&#x27;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>以下 kong-host 代表 kong 的地址</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -i -X POST \<br>  --url http://kong-host:8001/services/ \<br>  --data &#x27;name=product-service&#x27; \<br>  --data &#x27;url=http://product.service.consul&#x27;<br></code></pre></td></tr></table></figure>
 
 <p>Response:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell">HTTP/1.1 201 Created<br>Content-Type: application/json<br>Connection: keep-alive<br><br>&#123;<br>    &quot;id&quot;: &quot;c6b7d155-bb2e-4f5f-8dc8-20ebcb255316&quot;,<br>    &quot;name&quot;: &quot;product-service&quot;,<br>    &quot;tags&quot;: null,<br>    &quot;ca_certificates&quot;: null,<br>    &quot;host&quot;: &quot;product.service.consul&quot;,<br>    &quot;protocol&quot;: &quot;http&quot;,<br>    &quot;enabled&quot;: true,<br>    &quot;retries&quot;: 5,<br>    &quot;created_at&quot;: 1657524752,<br>    &quot;updated_at&quot;: 1657524752,<br>    &quot;port&quot;: 80,<br>    &quot;client_certificate&quot;: null,<br>    &quot;connect_timeout&quot;: 60000,<br>    &quot;tls_verify_depth&quot;: null,<br>    &quot;write_timeout&quot;: 60000,<br>    &quot;path&quot;: null,<br>    &quot;tls_verify&quot;: null,<br>    &quot;read_timeout&quot;: 60000<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h4 id="添加一个路由-route"><a href="#添加一个路由-route" class="headerlink" title="添加一个路由 route"></a>添加一个路由 route</h4><p>kong 的路由，是用来解析客户端请求，并进行转发的，转发的目标就是上面所定义的服务。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -i -X POST \<br>  --url http://localhost:8001/services/product-service/routes \<br>  --data &#x27;paths[]=/product&#x27;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -i -X POST \<br>  --url http://kong-host:8001/services/product-service/routes \<br>  --data &#x27;paths[]=/product&#x27;<br></code></pre></td></tr></table></figure>
 
 <p>Response:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs shell">HTTP/1.1 201 Created<br>Content-Type: application/json<br>Connection: keep-alive<br><br>&#123;<br>    &quot;id&quot;: &quot;a0973810-9e03-4a7e-9fb8-aba7a4751bb8&quot;,<br>    &quot;name&quot;: null,<br>    &quot;tags&quot;: null,<br>    &quot;regex_priority&quot;: 0,<br>    &quot;hosts&quot;: null,<br>    &quot;headers&quot;: null,<br>    &quot;request_buffering&quot;: true,<br>    &quot;response_buffering&quot;: true,<br>    &quot;paths&quot;: [<br>        &quot;/product&quot;<br>    ],<br>    &quot;methods&quot;: null,<br>    &quot;sources&quot;: null,<br>    &quot;created_at&quot;: 1657525072,<br>    &quot;updated_at&quot;: 1657525072,<br>    &quot;preserve_host&quot;: false,<br>    &quot;path_handling&quot;: &quot;v0&quot;,<br>    &quot;service&quot;: &#123;<br>        &quot;id&quot;: &quot;c6b7d155-bb2e-4f5f-8dc8-20ebcb255316&quot;<br>    &#125;,<br>    &quot;strip_path&quot;: true,<br>    &quot;https_redirect_status_code&quot;: 426,<br>    &quot;snis&quot;: null,<br>    &quot;destinations&quot;: null,<br>    &quot;protocols&quot;: [<br>        &quot;http&quot;,<br>        &quot;https&quot;<br>    ]<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h4 id="启动-consul-服务中心，注册-product-服务"><a href="#启动-consul-服务中心，注册-product-服务" class="headerlink" title="启动 consul 服务中心，注册 product 服务"></a>启动 consul 服务中心，注册 product 服务</h4>
+<h4 id="启动-consul-服务中心，注册-product-服务"><a href="#启动-consul-服务中心，注册-product-服务" class="headerlink" title="启动 consul 服务中心，注册 product 服务"></a>启动 consul 服务中心，注册 product 服务</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/hailong-bot/hailong-bot-go-code/blob/main/consul/main.go">代码位置</a></p>
+<p>go run main,go –addr&#x3D;172.22.1.2 –port&#x3D;8080</p>
+</blockquote>
+<h5 id="注册多个服务"><a href="#注册多个服务" class="headerlink" title="注册多个服务"></a>注册多个服务</h5><p><img src="https://i.imgur.com/graH4c1.png" srcset="/img/loading.gif" lazyload alt="image-20240903152418463"></p>
+<h5 id="转发测试"><a href="#转发测试" class="headerlink" title="转发测试"></a>转发测试</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -i -X GET \<br>  --url http://kong-host:8000/product/info<br></code></pre></td></tr></table></figure>
+
+<h5 id="细节问题"><a href="#细节问题" class="headerlink" title="细节问题"></a>细节问题</h5><p>我们注册服务的时候会指明服务请求转发的路径是哪一个，比如 <code>product.service.consul</code>, 表明请求 <code>product-service</code> 这个服务会转发到指定的 url 中，<code>product.service.consul</code>, 要求在注册 consul 服务的时候需要指定服务名称为 <code>product</code>，添加路由之后 <code>kong</code> 会将这个路由转发的具体的服务。但是现在会带来一个新的问题，就是<strong>指定的服务是没有端口的，怎么请求到具体 url 的端口里面的</strong></p>
+
                 
               </div>
             
