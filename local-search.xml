@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Linux 歧路</title>
+    <link href="/2024/09/04/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%85%BB%E6%88%90%E4%B9%8B%E8%B7%AF/Linux%20%E6%AD%A7%E8%B7%AF/"/>
+    <url>/2024/09/04/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%85%BB%E6%88%90%E4%B9%8B%E8%B7%AF/Linux%20%E6%AD%A7%E8%B7%AF/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Linux-歧路"><a href="#Linux-歧路" class="headerlink" title="Linux 歧路"></a>Linux 歧路</h1><p>最近一直在研究 neovim、Linux 发行版，包括 Linux Mint、Ubuntu、Arch Linux， 好像总是在为了一个工具，在消磨自己的时间，经常为了解决一个 bug 耗费几个小时，这几天总在想，这是值得的么。工具只能是工具，他能给我带来什么？</p><p>最开始研究这些的时候确实会带来某种震撼，但是后面发现在使用某些集成开发环境能完美代替 neovim ，使用 neovim 一定程度上还会降低自己开发的效率，感觉舍本逐末了。</p><h2 id="不要被“新手-小白”和“极客-大神”这2种标签所迷惑"><a href="#不要被“新手-小白”和“极客-大神”这2种标签所迷惑" class="headerlink" title="不要被“新手&#x2F;小白”和“极客&#x2F;大神”这2种标签所迷惑"></a>不要被“新手&#x2F;小白”和“极客&#x2F;大神”这2种标签所迷惑</h2><p>不少初入Linux圈的人不幸的被网上各种Linux测评文章、论坛帖子中的“新手”、“极客”、“小白”、“大神”、“入门级用户”、“高级用户”等标签所迷惑，总是想着尝试更高级的发行版，以获得所谓“极客”“大神”“高级用户”这些标签带来的荣耀。其实，这些荣耀都是虚荣，都是以巨额时间成本的浪费为代价的，只有傻瓜才会上当。</p><h2 id="Linux-不是一切"><a href="#Linux-不是一切" class="headerlink" title="Linux 不是一切"></a>Linux 不是一切</h2><p>从实用主义和个人桌面系统的角度出发，Linux根本不算上佳的操作系统。客观的说，Linux可以干的工作绝大多数在windows下早就可以干了，Linux下有的windows下肯定也有，而且通常是更好的，然而windows下有的，Linux经常没有。虽然wine已经可以搞定更多的windows程序，但大量的版权专业应用只有在windows下才能正常运行。</p><p>更不要忘了，计算通讯设备上的系统有很多，开源的Linux也仅仅在PC行业占领微不足道的地盘。执着于Linux这个工具不放，不是明智之举。</p><p>那么Linux到底有用还是没用？看你咯！你要做的就是尽可能快的利用Linux为尽可能多的人创造尽可能高的实用价值，榨干Linux！</p><p>一辈子能够高枕无忧、不愁生存、“专业”的折腾Linux、为Linux而撸Linux的人毕竟是极少数人。活在这个残酷的商业社会中，每个人都应该放眼更长远、更有用的目标，从实用、易用、好用主义角度出发去利用手上的工具，这才是一个成熟的人应有的姿态。</p><h2 id="引用一句话"><a href="#引用一句话" class="headerlink" title="引用一句话"></a>引用一句话</h2><blockquote><p><a href="https://linux.zone/2055#:~:text=%E7%AD%94%E6%A1%88%E6%98%AF%EF%BC%9A%E5%A4%9A%E6%95%B0%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7">linux.zone</a></p></blockquote><figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs md">邓文怡2024-8-4 21:18<br>我更愿意用一种包容的心态去看待这件事，先抛出一个问题“为什么活着？”，估计没有人能回答，即使回答了，当一些事物改变时，他也会对回答不自信，比如“为了她”，但是如果分手了呢？<br><br>人活着，吃饭，喝水，睡觉，性，自身价值，都是需要的，有的人研究Linux为了炫耀，这也许是他自身价值的体现。同时也可能是一种快乐。<br><br>你说这些东西在简历上没有什么价值，这得看Boss，马云说“这个世界唯一不变的就是：一直在变化”，学习能力很重要的，一个能掌握Linux的人，也能容易的掌握其他东西。一个刻苦钻研的人，对于做产品来说是一件好事，这个世界的产品无非就是将以前的研究成果组装起来，变成新的成果。<br><br>我们都是站在巨人的肩膀上，就像牛顿说的那样。习惯捣鼓Linux的人对于事物可能更愿意研究其原理，研究透巨人，肩膀才能站稳。<br><br>再回到关于Linux狂热者的问题，我觉得正常不正常这个概念是有悖论的，这个世界没有绝对的正确，当疯子被定义为正常人的时候，原来的正常人都变成了疯子。比如“世界末日时，有的人在享受生活，有的人开始做之前不敢做的事情，有的人开始犯罪，有的人仍然像往常一样”，你没法定义谁才是疯子，他们都以为对方是疯子。<br><br>所以，你可能是遭遇了什么巨大的问题，这个问题可能超出了你的时间精力预算或者技术水平，这个问题的起因可能是你为了追随其他的Linux狂热者而向他们学习，想跟他们一样，结果天不遂人愿。<br><br>爱因斯坦想当个小提琴手来着，失败了。<br><br>他不会说小提琴手没有存在的意义，他们是疯子。<br><br>马云下棋输给一个小学生，他不会说下棋纯粹是浪费时间，没有意义。<br><br>但是这并不影响他们在其他领域取得杰出成就。<br><br>有的人对Linux有情怀，有的人把什么都当作工具，他自己也是工具。<br><br>Windows也没有那么好，Linux也没有那么差，我也是最近在Windows的特性上感到碰壁，于是搜到了这篇文章。<br><br>怡然自得即可，当你烦躁时，再好的工具也是废物，当问题很大难以解决时，不如调整心态，一味的逃避就像小孩摔倒了就怪地球。<br><br>人生需要的是自洽，微软那么多bug都能跑，还聘请了阿三程序员，他们内部都在喷Windows，但是他们却开发着Windows，他们多自洽啊。<br><br><br>我更愿意用一种包容的心态去看待这件事，先抛出一个问题“为什么活着？”，估计没有人能回答，即使回答了，当一些事物改变时，他也会对回答不自信，比如“为了她”，但是如果分手了呢？<br><br>人活着，吃饭，喝水，睡觉，性，自身价值，都是需要的，有的人研究Linux为了炫耀，这也许是他自身价值的体现。同时也可能是一种快乐。<br><br>你说这些东西在简历上没有什么价值，这得看Boss，马云说“这个世界唯一不变的就是：一直在变化”，学习能力很重要的，一个能掌握Linux的人，也能容易的掌握其他东西。一个刻苦钻研的人，对于做产品来说是一件好事，这个世界的产品无非就是将以前的研究成果组装起来，变成新的成果。<br><br>我们都是站在巨人的肩膀上，就像牛顿说的那样。习惯捣鼓Linux的人对于事物可能更愿意研究其原理，研究透巨人，肩膀才能站稳。<br><br>再回到关于Linux狂热者的问题，我觉得正常不正常这个概念是有悖论的，这个世界没有绝对的正确，当疯子被定义为正常人的时候，原来的正常人都变成了疯子。比如“世界末日时，有的人在享受生活，有的人开始做之前不敢做的事情，有的人开始犯罪，有的人仍然像往常一样”，你没法定义谁才是疯子，他们都以为对方是疯子。<br><br>所以，你可能是遭遇了什么巨大的问题，这个问题可能超出了你的时间精力预算或者技术水平，这个问题的起因可能是你为了追随其他的Linux狂热者而向他们学习，想跟他们一样，结果天不遂人愿。<br><br>爱因斯坦想当个小提琴手来着，失败了。<br><br>他不会说小提琴手没有存在的意义，他们是疯子。<br><br>马云下棋输给一个小学生，他不会说下棋纯粹是浪费时间，没有意义。<br><br>但是这并不影响他们在其他领域取得杰出成就。<br><br>有的人对Linux有情怀，有的人把什么都当作工具，他自己也是工具。<br><br>Windows也没有那么好，Linux也没有那么差，我也是最近在Windows的特性上感到碰壁，于是搜到了这篇文章。<br><br>怡然自得即可，当你烦躁时，再好的工具也是废物，当问题很大难以解决时，不如调整心态，一味的逃避就像小孩摔倒了就怪地球。<br><br>人生需要的是自洽，微软那么多bug都能跑，还聘请了阿三程序员，他们内部都在喷Windows，但是他们却开发着Windows，他们多自洽啊。<br></code></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>任何东西的研究其实都有意义的，但是对于目前的我可能来说研究这些工具没有实际意义，反而影响自己的效率，所以很长一段时间我都不会研究 neovim、 Linux 之类，对于 IDE 直接使用 goland，对于 Linux 直接使用 mac 替代，能达到熟悉不忘记即可。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>程序员养成之路</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+      <tag>tool</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>登录认证篇</title>
     <link href="/2024/08/23/%E9%86%8D%E9%86%90%E7%81%8C%E9%A1%B6/%E6%8A%80%E6%9C%AF%E7%AF%87/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E7%AF%87/"/>
     <url>/2024/08/23/%E9%86%8D%E9%86%90%E7%81%8C%E9%A1%B6/%E6%8A%80%E6%9C%AF%E7%AF%87/%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E7%AF%87/</url>
