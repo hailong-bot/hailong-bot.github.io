@@ -1,0 +1,916 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="phoenix">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Mongo1. 简介MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。 在高负载的情况下，添加更多的节点，可以保证服务器性能。 MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。 MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对组成。MongoDB 文档类似于 JSON 对象。字段值可以包含其他文档，数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongo">
+<meta property="og:url" content="https://hailong-bot.github.io/2024/02/28/Mongo/index.html">
+<meta property="og:site_name" content="hailong-bot">
+<meta property="og:description" content="Mongo1. 简介MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。 在高负载的情况下，添加更多的节点，可以保证服务器性能。 MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。 MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对组成。MongoDB 文档类似于 JSON 对象。字段值可以包含其他文档，数组">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/m7H6Ewr.png">
+<meta property="og:image" content="https://i.imgur.com/KIwvBx0.png">
+<meta property="article:published_time" content="2024-02-28T06:00:30.000Z">
+<meta property="article:modified_time" content="2024-10-31T12:17:58.713Z">
+<meta property="article:author" content="phoenix">
+<meta property="article:tag" content="Mongo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.imgur.com/m7H6Ewr.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Mongo - hailong-bot</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"hailong-bot.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>phoenix</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Go系列</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/Go%E7%B3%BB%E5%88%97/Go%E8%BF%9B%E9%98%B6%E8%AE%AD%E7%BB%83%E8%90%A5" target="_self">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>Go进阶训练营</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/Go%E7%B3%BB%E5%88%97/%E6%AF%8F%E6%97%A5%E4%B8%80%E5%BA%93" target="_self">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>Go每日一库</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-category-fill"></i>
+                <span>醍醐灌顶</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/%E9%86%8D%E9%86%90%E7%81%8C%E9%A1%B6/%E6%8A%80%E6%9C%AF%E7%AF%87" target="_self">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>技术篇</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Mongo"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-28 14:00" pubdate>
+          2024年2月28日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Mongo</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Mongo"><a href="#Mongo" class="headerlink" title="Mongo"></a>Mongo</h1><h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h1><p>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。</p>
+<p>在高负载的情况下，添加更多的节点，可以保证服务器性能。</p>
+<p>MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。</p>
+<p>MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对组成。MongoDB 文档类似于 JSON 对象。字段值可以包含其他文档，数组及文档数组。</p>
+<h2 id="1-1-主要特点"><a href="#1-1-主要特点" class="headerlink" title="1.1 主要特点"></a>1.1 主要特点</h2><ul>
+<li>MongoDB 是一个面向文档存储的数据库，操作起来比较简单和容易。</li>
+<li>你可以在MongoDB记录中设置任何属性的索引 (如：FirstName&#x3D;”Sameer”,Address&#x3D;”8 Gandhi Road”)来实现更快的排序。</li>
+<li>你可以通过本地或者网络创建数据镜像，这使得MongoDB有更强的扩展性。</li>
+<li>如果负载的增加（需要更多的存储空间和更强的处理能力） ，它可以分布在计算机网络中的其他节点上这就是所谓的分片。</li>
+<li>Mongo支持丰富的查询表达式。查询指令使用JSON形式的标记，可轻易查询文档中内嵌的对象及数组。</li>
+<li>MongoDb 使用update()命令可以实现替换完成的文档（数据）或者一些指定的数据字段 。</li>
+<li>Mongodb中的Map&#x2F;reduce主要是用来对数据进行批量处理和聚合操作。</li>
+<li>Map和Reduce。Map函数调用emit(key,value)遍历集合中所有的记录，将key与value传给Reduce函数进行处理。</li>
+<li>Map函数和Reduce函数是使用Javascript编写的，并可以通过db.runCommand或mapreduce命令来执行MapReduce操作。</li>
+<li>GridFS是MongoDB中的一个内置功能，可以用于存放大量小文件。</li>
+<li>MongoDB允许在服务端执行脚本，可以用Javascript编写某个函数，直接在服务端执行，也可以把函数的定义存储在服务端，下次直接调用即可。</li>
+<li>MongoDB支持各种编程语言:RUBY，PYTHON，JAVA，C++，PHP，C#等多种语言。</li>
+<li>MongoDB安装简单</li>
+</ul>
+<h2 id="1-2-MongoDB概念解析"><a href="#1-2-MongoDB概念解析" class="headerlink" title="1.2  MongoDB概念解析"></a>1.2  MongoDB概念解析</h2><p>不管我们学习什么数据库都应该学习其中的基础概念，在mongodb中基本的概念是文档、集合、数据库，下面我们挨个介绍。</p>
+<p>下表将帮助您更容易理解Mongo中的一些概念：</p>
+<table>
+<thead>
+<tr>
+<th>SQL术语&#x2F;概念</th>
+<th>MongoDB术语概念</th>
+<th>解释&#x2F;说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>database</td>
+<td>databse</td>
+<td>数据库</td>
+</tr>
+<tr>
+<td>table</td>
+<td>collection</td>
+<td>数据库表&#x2F;集合</td>
+</tr>
+<tr>
+<td>row</td>
+<td>document</td>
+<td>数据记录行&#x2F;文档</td>
+</tr>
+<tr>
+<td>column</td>
+<td>field</td>
+<td>数据库字段&#x2F;域</td>
+</tr>
+<tr>
+<td>index</td>
+<td>index</td>
+<td>索引</td>
+</tr>
+<tr>
+<td>table joins</td>
+<td></td>
+<td>表连接， MongoDB不支持</td>
+</tr>
+<tr>
+<td>primary key</td>
+<td>primary key</td>
+<td>主键，MongoDB自动将_id字段设置为主键</td>
+</tr>
+</tbody></table>
+<p>通过下图实例，我们也可以更直观的了解Mongo中的一些概念：</p>
+<p><img src="https://i.imgur.com/m7H6Ewr.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="2-MongoDB-连接"><a href="#2-MongoDB-连接" class="headerlink" title="2. MongoDB 连接"></a>2. MongoDB 连接</h1><blockquote>
+<p>本文建议使用mongo命令进行连接</p>
+</blockquote>
+<p><img src="https://i.imgur.com/KIwvBx0.png" srcset="/img/loading.gif" lazyload alt="3be8fe49ad683912270fcd513242793"></p>
+<p>连接示例： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mongo --host localhsot --username admin --passwod admin123 --port 27017<br></code></pre></td></tr></table></figure>
+
+<p>由于mongo安装比较简单，推荐使用docker安装，目前我是直接向docker里面起了一个mongo容器，进入容器后使用的mongo，windows安装mongo后可能没有这个命令。</p>
+<h1 id="3-基本操作"><a href="#3-基本操作" class="headerlink" title="3. 基本操作"></a>3. 基本操作</h1><h2 id="3-1-查询数据库"><a href="#3-1-查询数据库" class="headerlink" title="3.1 查询数据库"></a>3.1 查询数据库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">show databases<br>show dbs<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-2-删除数据库"><a href="#3-2-删除数据库" class="headerlink" title="3.2 删除数据库"></a>3.2 删除数据库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.dropDatabase()<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-3-创建集合"><a href="#3-3-创建集合" class="headerlink" title="3.3 创建集合"></a>3.3 创建集合</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.createCollectction(<span class="hljs-string">&quot;phoenix&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>当在集合不存在的情况下，直接插入文档，MongoDB会自动创建文档</p>
+<h2 id="3-4-查询集合"><a href="#3-4-查询集合" class="headerlink" title="3.4 查询集合"></a>3.4 查询集合</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">show tables<br>show collections<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-5-删除集合"><a href="#3-5-删除集合" class="headerlink" title="3.5 删除集合"></a>3.5 删除集合</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.phoenix.drop()<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-6-插入文档"><a href="#3-6-插入文档" class="headerlink" title="3.6 插入文档"></a>3.6 插入文档</h2><p>MongoDB 使用 insert() 或 save() 方法向集合中插入文档，语法如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.COLLECTION_NAME.insert(document)<br>或<br>db.COLLECTION_NAME.save(document)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>save()：如果 _id 主键存在则更新数据，如果不存在就插入数据。该方法新版本中已废弃，可以使用 db.collection.insertOne() 或 db.collection.replaceOne() 来代替。</li>
+<li>insert(): 若插入的数据主键已经存在，则会抛 org.springframework.dao.DuplicateKeyException 异常，提示主键重复，不保存当前数据。</li>
+</ul>
+<p>**3.2 版本之后新增了 db.collection.insertOne() 和 db.collection.insertMany()**。</p>
+<p>db.collection.insertOne() 用于向集合插入一个新文档，语法格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.collection.insertOne(<br>   &lt;document&gt;,<br>   &#123;<br>      writeConcern: &lt;document&gt;<br>   &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>db.collection.insertMany() 用于向集合插入一个多个文档，语法格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.collection.insertMany(<br>   [ &lt;document 1&gt; , &lt;document 2&gt;, ... ],<br>   &#123;<br>      writeConcern: &lt;document&gt;,<br>      ordered: &lt;boolean&gt;<br>   &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>document：要写入的文档。</li>
+<li>writeConcern：写入策略，默认为 1，即要求确认写操作，0 是不要求。</li>
+<li>ordered：指定是否按顺序写入，默认 true，按顺序写入。</li>
+</ul>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<p>以下文档可以存储在 MongoDB 的 phoenix 数据库 的 demo集合中：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json">use phoenix<br>db.demo.insertOne(<span class="hljs-punctuation">&#123;</span><br>	desc<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;demo&quot;</span><span class="hljs-punctuation">,</span><br>    by<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;phoenix&quot;</span><span class="hljs-punctuation">,</span><br>    tags<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;demo&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;learn&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;MongoDB&quot;</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>以上实例中 col 是我们的集合名，如果该集合不在该数据库中， MongoDB 会自动创建该集合并插入文档。</p>
+<h2 id="3-7-更新文档"><a href="#3-7-更新文档" class="headerlink" title="3.7 更新文档"></a>3.7 更新文档</h2><p>MongoDB 使用 update() 和 save() 方法来更新集合中的文档。接下来让我们详细来看下两个函数的应用及其区别。</p>
+<p><strong>update() 方法</strong><br>update() 方法用于更新已存在的文档。语法格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.collection.update(<br>   &lt;query&gt;,<br>   &lt;update&gt;,<br>   &#123;<br>     upsert: &lt;boolean&gt;,<br>     multi: &lt;boolean&gt;,<br>     writeConcern: &lt;document&gt;<br>   &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>query : update的查询条件，类似sql update查询内where后面的。</li>
+<li>update : update的对象和一些更新的操作符（如$,$inc…）等，也可以理解为sql update查询内set后面的</li>
+<li>upsert : 可选，这个参数的意思是，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入。</li>
+<li>multi : 可选，mongodb 默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新。\</li>
+<li>writeConcern :可选，抛出异常的级别。</li>
+</ul>
+<p>更新开始插入phoenix中的数据</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json">db.demo.update(<br>    <span class="hljs-punctuation">&#123;</span>&#x27;desc&#x27;<span class="hljs-punctuation">:</span> &#x27;demo&#x27;<span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-punctuation">&#123;</span>$set<span class="hljs-punctuation">:</span><br>     <span class="hljs-punctuation">&#123;</span>&#x27;desc&#x27;<span class="hljs-punctuation">:</span>&#x27;MognoDB&#x27;<span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>updateOne、updateMany方法</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.collection.updateOne(<br>	<span class="hljs-operator">&lt;</span>query<span class="hljs-operator">&gt;</span>,<br>    <span class="hljs-operator">&lt;</span><span class="hljs-keyword">update</span><span class="hljs-operator">&gt;</span>,<br>    <span class="hljs-operator">&lt;</span>option<span class="hljs-operator">&gt;</span><br>)<br></code></pre></td></tr></table></figure>
+
+<p>实际开发过程中可能updateOne和updateMany使用的比较多</p>
+<p>举个例子：可能会遇到字段中包含数组对象的情况，arrayFilter选项可以选择具体是哪个元素（根据条件）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.form.updateMany(<br>	&#123;<br>		&quot;fieldGroupList.name&quot;: &quot;相对方信息&quot;,<br>		&quot;fieldGroupList.fieldList.id&quot;: &#123;<br>            &quot;$eq&quot;: &quot;counterpartyGroup_group&quot;,<br>        &#125;,<br>	&#125;,<br>	&#123;<br>		&quot;$set&quot; : &#123;<br>			&quot;fieldGroupList.$[elem].fieldList.$[e]&quot;: &#123;<br>				&quot;id&quot;:         &quot;counterpartyGroup_chabaidao&quot;,<br>				&quot;name&quot;:       &quot;相对方组&quot;,<br>				&quot;type&quot;:       <span class="hljs-number">-32</span>,<br>				&quot;isRequired&quot;: <span class="hljs-literal">false</span>,<br>				&quot;isFixed&quot;:    <span class="hljs-literal">true</span>,<br>			&#125;<br>		&#125;<br>	&#125;,<br>	&#123;<br>		&quot;arrayFilters&quot;: [<br>			&#123;<br>				&quot;elem.name&quot;: &quot;相对方信息&quot;<br>			&#125;,<br>			&#123;<br>				&quot;e.id&quot;: &quot;counterpartyGroup_chabaidao&quot;<br>			&#125;<br>		]<br>	&#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.contract_chabaidao.updateOne(<br>	&#123;<br>		&quot;contractType.formFields.name&quot;: &quot;相对方信息&quot;,<br>		&quot;contractType.formFields.fieldList.name&quot;: &#123;<br>			&quot;$in&quot;: [&quot;外部相对方&quot;,&quot;内部相对方&quot;]<br>		&#125;,<br>		&quot;_id&quot;: ObjectId(&quot;650fd2e1f6c3e755d4d3fca6&quot;)<br>	&#125;,<br>	&#123;<br>		&quot;$pull&quot;: &#123;<br>			&quot;contractType.formFields.$[counter].fieldList&quot;: &#123;<br>				&quot;name&quot;: &#123;<br>					&quot;$in&quot;: [&quot;内部相对方&quot;,&quot;外部相对方&quot;]<br>				&#125;<br>			&#125;<br>		&#125;<br>	&#125;,<br>	&#123;<br>		&quot;arrayFilters&quot;: [&#123;&quot;counter.name&quot;: &quot;相对方信息&quot;&#125;]<br>	&#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>save() 方法</strong></p>
+<p>save() 方法通过传入的文档来替换已有文档，_id 主键存在就更新，不存在就插入。语法格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.collection.save(<br>   &lt;document&gt;,<br>   &#123;<br>     writeConcern: &lt;document&gt;<br>   &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>document : 文档数据。</li>
+<li>writeConcern :可选，抛出异常的级别。</li>
+</ul>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<p>以下实例中我们替换了 _id 为 56064f89ade2f21f36b03136 的文档数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;db.col.save(&#123;<br>    <span class="hljs-string">&quot;_id&quot;</span> : ObjectId(<span class="hljs-string">&quot;56064f89ade2f21f36b03136&quot;</span>),<br>    <span class="hljs-string">&quot;title&quot;</span> : <span class="hljs-string">&quot;MongoDB&quot;</span>,<br>    <span class="hljs-string">&quot;description&quot;</span> : <span class="hljs-string">&quot;MongoDB 是一个 Nosql 数据库&quot;</span>,<br>    <span class="hljs-string">&quot;by&quot;</span> : <span class="hljs-string">&quot;Runoob&quot;</span>,<br>    <span class="hljs-string">&quot;tags&quot;</span> : [<br>            <span class="hljs-string">&quot;mongodb&quot;</span>,<br>            <span class="hljs-string">&quot;NoSQL&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;likes&quot;</span> : 110<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-8-删除文档"><a href="#3-8-删除文档" class="headerlink" title="3.8 删除文档"></a>3.8 删除文档</h2><p>MongoDB remove() 函数是用来移除集合中的数据。</p>
+<p>MongoDB 数据更新可以使用 update() 函数。在执行 remove() 函数前先执行 find() 命令来判断执行的条件是否正确，这是一个比较好的习惯。</p>
+<p><strong>语法</strong></p>
+<p>remove() 方法的基本语法格式如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.collection.remove(<br>   &lt;query&gt;,<br>   &lt;justOne&gt;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>如果你的 MongoDB 是 2.6 版本以后的，语法格式如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.collection.remove(<br>   &lt;query&gt;,<br>   &#123;<br>     justOne: &lt;boolean&gt;,<br>     writeConcern: &lt;document&gt;<br>   &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>query :（可选）删除的文档的条件。</li>
+<li>justOne : （可选）如果设为 true 或 1，则只删除一个文档，如果不设置该参数，或使用默认值 false，则删除所有匹配条件的文档。</li>
+<li>writeConcern :（可选）抛出异常的级别。</li>
+</ul>
+<p><strong>例子</strong></p>
+<p>以下文档我们执行两次插入操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;db.col.insertOne(&#123;title: <span class="hljs-string">&#x27;MongoDB 教程&#x27;</span>, <br>    description: <span class="hljs-string">&#x27;MongoDB 是一个 Nosql 数据库&#x27;</span>,<br>    tags: [<span class="hljs-string">&#x27;mongodb&#x27;</span>, <span class="hljs-string">&#x27;database&#x27;</span>, <span class="hljs-string">&#x27;NoSQL&#x27;</span>],<br>    likes: 100<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>使用 find() 函数查询数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt; db.col.<span class="hljs-function"><span class="hljs-title">find</span></span>()<br>&#123; <span class="hljs-string">&quot;_id&quot;</span> : ObjectId(<span class="hljs-string">&quot;56066169ade2f21f36b03137&quot;</span>), <span class="hljs-string">&quot;title&quot;</span> : <span class="hljs-string">&quot;MongoDB 教程&quot;</span>, <span class="hljs-string">&quot;description&quot;</span> : <span class="hljs-string">&quot;MongoDB 是一个 Nosql 数据库&quot;</span>, <span class="hljs-string">&quot;tags&quot;</span> : [ <span class="hljs-string">&quot;mongodb&quot;</span>, <span class="hljs-string">&quot;database&quot;</span>, <span class="hljs-string">&quot;NoSQL&quot;</span> ], <span class="hljs-string">&quot;likes&quot;</span> : 100 &#125;<br>&#123; <span class="hljs-string">&quot;_id&quot;</span> : ObjectId(<span class="hljs-string">&quot;5606616dade2f21f36b03138&quot;</span>), <span class="hljs-string">&quot;title&quot;</span> : <span class="hljs-string">&quot;MongoDB 教程&quot;</span>, <span class="hljs-string">&quot;description&quot;</span> : <span class="hljs-string">&quot;MongoDB 是一个 Nosql 数据库&quot;</span>, <span class="hljs-string">&quot;tags&quot;</span> : [ <span class="hljs-string">&quot;mongodb&quot;</span>, <span class="hljs-string">&quot;database&quot;</span>, <span class="hljs-string">&quot;NoSQL&quot;</span> ], <span class="hljs-string">&quot;likes&quot;</span> : 100 &#125;<br></code></pre></td></tr></table></figure>
+
+<p>移除 title 为 ‘MongoDB 教程’ 的文档：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;db.col.remove(&#123;<span class="hljs-string">&#x27;title&#x27;</span>:<span class="hljs-string">&#x27;MongoDB 教程&#x27;</span>&#125;)<br>WriteResult(&#123; <span class="hljs-string">&quot;nRemoved&quot;</span> : 2 &#125;)           <span class="hljs-comment"># 删除了两条数据</span><br>&gt;db.col.find()<br>……                                        <span class="hljs-comment"># 没有数据</span><br></code></pre></td></tr></table></figure>
+
+<p>如果向删除所有数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs she">&gt;db.col.remove(&#123;&#125;)<br></code></pre></td></tr></table></figure>
+
+<h1 id="4-DSL语句"><a href="#4-DSL语句" class="headerlink" title="4. DSL语句"></a>4. DSL语句</h1><blockquote>
+<p>常用的就那些</p>
+</blockquote>
+<h1 id="5-聚合查询"><a href="#5-聚合查询" class="headerlink" title="5. 聚合查询"></a>5. 聚合查询</h1><p>MongoDB  中聚合(aggregate)主要用于处理数据(诸如统计平均值，求和等)，并返回计算后的数据结果。</p>
+<p>有点类似 <strong>SQL</strong> 语句中的 **count(*)**。</p>
+<h2 id="5-1-aggregate-方法"><a href="#5-1-aggregate-方法" class="headerlink" title="5.1 aggregate 方法"></a>5.1 aggregate 方法</h2><p>MongoDB 中聚合的方法使用aggregate()。</p>
+<p>aggregate() 方法的基本语法格式如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">&gt;</span>db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)<br></code></pre></td></tr></table></figure>
+
+<p>AGGREGATE_OPERATION 详解</p>
+<blockquote>
+<p>示例</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.orders.aggregate([<br>  &#123;<br>    $<span class="hljs-keyword">group</span>: &#123;<br>      _id: &quot;$category&quot;,<br>      totalOrders: &#123; $sum: <span class="hljs-number">1</span> &#125;,<br>      averagePrice: &#123; $avg: &quot;$price&quot; &#125;<br>    &#125;<br>  &#125;<br>])<br></code></pre></td></tr></table></figure>
+
+<p><strong>用法</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql">&#123;<br>  $<span class="hljs-keyword">group</span>: &#123;<br>    _id: <span class="hljs-operator">&lt;</span>expression<span class="hljs-operator">&gt;</span>, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 用于指定分组的依据，可以是字段名或者表达式<br>    field1: &#123; <span class="hljs-operator">&lt;</span>accumulator1<span class="hljs-operator">&gt;</span> : <span class="hljs-operator">&lt;</span>expression1<span class="hljs-operator">&gt;</span> &#125;, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 对应于要计算的字段<span class="hljs-number">1</span>的累加器和表达式<br>    field2: &#123; <span class="hljs-operator">&lt;</span>accumulator2<span class="hljs-operator">&gt;</span> : <span class="hljs-operator">&lt;</span>expression2<span class="hljs-operator">&gt;</span> &#125;, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 对应于要计算的字段<span class="hljs-number">2</span>的累加器和表达式<br>    ...<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>详细用法:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.orders.aggregate([<br>  &#123;<br>    $<span class="hljs-keyword">match</span>: &#123;<br>      category: &quot;food&quot; <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 过滤category字段为&quot;food&quot;的文档<br>    &#125;<br>  &#125;,<br>  &#123;<br>    $<span class="hljs-keyword">group</span>: &#123;<br>      _id: &quot;$category&quot;,<br>      totalOrders: &#123; $sum: <span class="hljs-number">1</span> &#125;,<br>      averagePrice: &#123; $avg: &quot;$price&quot; &#125;<br>    &#125;<br>  &#125;,<br>  &#123;<br>    $sort: &#123; averagePrice: <span class="hljs-number">-1</span> &#125; <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 按照平均价格降序排序<br>  &#125;<br>])<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-1-1-accumulator"><a href="#5-1-1-accumulator" class="headerlink" title="5.1.1 accumulator"></a>5.1.1 accumulator</h3><p>在MongoDB的聚合管道中，累加器（accumulator）是用于对文档进行聚合计算的操作符。累加器操作符允许您在聚合过程中对文档的字段进行累加、平均、最小值、最大值、首个值、最后一个值等操作。以下是一些常用的累加器操作符以及它们的用途：</p>
+<ol>
+<li><p><code>$sum</code>: 对指定字段的值进行求和计算。</p>
+<ul>
+<li>用途：计算某个字段的总和，例如订单金额的总和等。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql">db.locations.aggregate([<br>  &#123;<br>    $<span class="hljs-keyword">group</span>: &#123;<br>      _id: <span class="hljs-keyword">null</span>, <span class="hljs-operator">/</span><span class="hljs-operator">/</span> 由于我们希望对整个集合中的文档进行聚合，因此将 _id 设置为 <span class="hljs-keyword">null</span><br>      totalDistance: &#123; $sum: &quot;$distance&quot; &#125;,<br> 	  count: &#123;$sum: <span class="hljs-number">1</span>&#125;, <span class="hljs-comment">-- 文档数量</span><br>    &#125;<br>  &#125;<br>])<br></code></pre></td></tr></table></figure>
+
+<p>后续大同小异，类似与Group By</p>
+</li>
+<li><p><code>$avg</code>: 对指定字段的值进行平均计算。</p>
+<ul>
+<li>用途：计算某个字段的平均值，例如订单价格的平均值等。</li>
+</ul>
+</li>
+<li><p><code>$min</code>: 获取指定字段的最小值。</p>
+<ul>
+<li>用途：获取某个字段的最小值，例如订单中的最低价格等。</li>
+</ul>
+</li>
+<li><p><code>$max</code>: 获取指定字段的最大值。</p>
+<ul>
+<li>用途：获取某个字段的最大值，例如订单中的最高价格等。</li>
+</ul>
+</li>
+<li><p><code>$first</code>: 获取每个分组中指定字段的首个值。</p>
+<ul>
+<li>用途：获取每个分组中某个字段的首个值，例如获取每个用户的首次购买时间等。</li>
+</ul>
+</li>
+<li><p><code>$last</code>: 获取每个分组中指定字段的最后一个值。</p>
+<ul>
+<li>用途：获取每个分组中某个字段的最后一个值，例如获取每个用户的最后一次购买时间等。</li>
+</ul>
+</li>
+</ol>
+<h1 id="6-关键字"><a href="#6-关键字" class="headerlink" title="6. 关键字"></a>6. 关键字</h1><h1 id="7-排序"><a href="#7-排序" class="headerlink" title="7. 排序"></a>7. 排序</h1><h1 id="8-索引"><a href="#8-索引" class="headerlink" title="8. 索引"></a>8. 索引</h1><h1 id="9-聚合"><a href="#9-聚合" class="headerlink" title="9. 聚合"></a>9. 聚合</h1><h1 id="10-监控、备份、恢复、分片"><a href="#10-监控、备份、恢复、分片" class="headerlink" title="10. 监控、备份、恢复、分片"></a>10. 监控、备份、恢复、分片</h1>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Mongo/" class="print-no-link">#Mongo</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/02/28/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/" title="接口幂等性">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">接口幂等性</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/02/24/Java%E5%BC%82%E6%AD%A5/" title="Java异步编程">
+                        <span class="hidden-mobile">Java异步编程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://hailong-bot.github.io/2024/02/28/Mongo/';
+          this.page.identifier = '/2024/02/28/Mongo/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>phoenix</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
