@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://i.imgur.com/DW8LO8s.png">
 <meta property="og:image" content="https://i.imgur.com/ImC3Tbc.png">
 <meta property="article:published_time" content="2024-10-31T12:21:00.000Z">
-<meta property="article:modified_time" content="2024-11-22T11:43:42.570Z">
+<meta property="article:modified_time" content="2024-11-28T02:09:25.280Z">
 <meta property="article:author" content="phoenix">
 <meta property="article:tag" content="Go进阶训练营">
 <meta name="twitter:card" content="summary_large_image">
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          4.9k 字
         
       </span>
     
@@ -257,7 +257,7 @@
         
         
         
-          39 分钟
+          41 分钟
         
       </span>
     
@@ -623,7 +623,7 @@
 <h2 id="HTTP2"><a href="#HTTP2" class="headerlink" title="HTTP2"></a>HTTP2</h2><blockquote>
 <p> http2 是 gRPC 中的关键协议</p>
 </blockquote>
-<h3 id="HTTP-存在的问题"><a href="#HTTP-存在的问题" class="headerlink" title="HTTP! 存在的问题"></a>HTTP! 存在的问题</h3><ul>
+<h3 id="HTTP1-存在的问题"><a href="#HTTP1-存在的问题" class="headerlink" title="HTTP1 存在的问题"></a>HTTP1 存在的问题</h3><ul>
 <li>低效的 TCP 利用<ul>
 <li>连接是一次性的，不能重复使用</li>
 </ul>
@@ -704,13 +704,24 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">goctl api new api<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>一般情况是编写 <code>.api</code> 文件和编写 <code>.proto</code>文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">goctl rpc protoc user.proto --go_out=. --go-grpc_out=. --zrpc_out=.<br>goctl api go -api user.api -<span class="hljs-built_in">dir</span> . -style gozero<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">      goctl rpc protoc user.proto --go_out=. --go-grpc_out=. --zrpc_out=.<br>      goctl api go -api user.api -<span class="hljs-built_in">dir</span> . -style gozero<br><br>2. 服务联调<br><br>   ```yaml<br>   <span class="hljs-comment"># api etc user.yaml</span><br>   Name: User<br>   Host: 0.0.0.0<br>   Port: 8888<br>   <br>   UserRpc:<br>     Etcd:<br>       Hosts:<br>         - 117.50.179.8:2379<br>       Key: user.rpc<br>       User: <span class="hljs-string">&quot;root&quot;</span><br>       Pass: <span class="hljs-string">&quot;fghf987....&quot;</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// internal config config.go</span><br><span class="hljs-keyword">type</span> Config <span class="hljs-keyword">struct</span> &#123;<br>	rest.RestConf<br><br>	UserRpc zrpc.RpcClientConf<br>&#125;<br><br><br><span class="hljs-comment">// svc servicecontext.go</span><br><span class="hljs-keyword">type</span> ServiceContext <span class="hljs-keyword">struct</span> &#123;<br>	Config     config.Config<br>	UserClient userclient.User<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewServiceContext</span><span class="hljs-params">(c config.Config)</span></span> *ServiceContext &#123;<br>	<span class="hljs-keyword">return</span> &amp;ServiceContext&#123;<br>		Config:     c,<br>		UserClient: userclient.NewUser(zrpc.MustNewClient(c.UserRpc)),<br>	&#125;<br>&#125;<br><br><span class="hljs-comment">// logic userlogic.go</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *UserLogic)</span></span> User(req *types.UserReq) (resp *types.UserResp, err <span class="hljs-type">error</span>) &#123;<br>	<span class="hljs-comment">// todo: add your logic here and delete this line</span><br>	getUserResp, err := l.svcCtx.UserClient.GetUser(l.ctx, &amp;user.GetUserReq&#123;<br>		Id: req.Id,<br>	&#125;)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>	&#125;<br>	<span class="hljs-keyword">return</span> &amp;types.UserResp&#123;<br>		Id:    getUserResp.Id,<br>		Name:  getUserResp.Name,<br>		Phone: getUserResp.Phone,<br>	&#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 </li>
-<li><p>服务联调</p>
-</li>
 </ol>
+<h4 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h4><ol>
+<li><p>编写 <em>.sql</em> 文件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `<span class="hljs-keyword">user</span>` (<br>                        `id` <span class="hljs-type">BIGINT</span> UNSIGNED AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;用户ID，主键&#x27;</span>,<br>                        `username` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">UNIQUE</span> COMMENT <span class="hljs-string">&#x27;用户名&#x27;</span>,<br>                        `email` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">UNIQUE</span> COMMENT <span class="hljs-string">&#x27;电子邮箱&#x27;</span>,<br>                        `password` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;密码（加密存储）&#x27;</span>,<br>                        `phone` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) COMMENT <span class="hljs-string">&#x27;手机号&#x27;</span>,<br>                        `status` TINYINT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：1=启用，0=禁用&#x27;</span>,<br>                        `created_at` <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>                        `updated_at` <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>                        <span class="hljs-keyword">PRIMARY</span> KEY (`id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;用户表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+
 </li>
+<li><p>生成 model</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">goctl model mysql ddl --src user.sql --<span class="hljs-built_in">dir</span> <span class="hljs-string">&quot;./models/&quot;</span> -c<br></code></pre></td></tr></table></figure>
+
+<p><code>-c</code>表示使用缓存</p>
+</li>
+<li></li>
 </ol>
 
                 
