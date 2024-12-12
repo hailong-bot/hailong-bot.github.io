@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/72FJyDK.png">
 <meta property="article:published_time" content="2024-08-23T12:39:00.000Z">
-<meta property="article:modified_time" content="2024-11-28T05:44:54.636Z">
+<meta property="article:modified_time" content="2024-11-28T08:20:37.288Z">
 <meta property="article:author" content="phoenix">
 <meta property="article:tag" content="技术篇">
 <meta property="article:tag" content="Cookie">
@@ -247,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.1k 字
+          6.5k 字
         
       </span>
     
@@ -258,7 +258,7 @@
         
         
         
-          52 分钟
+          55 分钟
         
       </span>
     
@@ -601,7 +601,35 @@
 <li>B 在 上面第二步 A 请求 B 的接口的时候，调用 A 提供的解析 token 的请求，获取到用户信息</li>
 <li>然后 B 在经历自己的业务后，重定向到 target_url（b系统的页面）</li>
 </ol>
-<h2 id="基于重定向"><a href="#基于重定向" class="headerlink" title="基于重定向"></a>基于重定向</h2><h2 id="基于-Session"><a href="#基于-Session" class="headerlink" title="基于 Session"></a>基于 Session</h2><h2 id="LDAP-认证"><a href="#LDAP-认证" class="headerlink" title="LDAP 认证"></a>LDAP 认证</h2><h1 id="Oauth-2-0"><a href="#Oauth-2-0" class="headerlink" title="Oauth 2.0"></a>Oauth 2.0</h1><blockquote>
+<h2 id="基于重定向"><a href="#基于重定向" class="headerlink" title="基于重定向"></a>基于重定向</h2><h3 id="设计流程"><a href="#设计流程" class="headerlink" title="设计流程"></a>设计流程</h3><ol>
+<li><strong>用户未登录时</strong>：<ul>
+<li>用户访问 <code>System A</code> 或 <code>System B</code>。</li>
+<li>检测无有效登录状态，重定向到认证服务器登录页面。</li>
+</ul>
+</li>
+<li><strong>登录成功后</strong>：<ul>
+<li>认证服务器生成一个登录票据（如 <code>ticket</code> 或 <code>JWT</code>）。</li>
+<li>将用户重定向回原子系统，同时附加 <code>ticket</code>。</li>
+</ul>
+</li>
+<li><strong>子系统校验票据</strong>：<ul>
+<li>子系统将 <code>ticket</code> 发送给认证服务器验证。</li>
+<li>验证通过后为用户创建会话并允许访问资源。</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例代码-2"><a href="#示例代码-2" class="headerlink" title="示例代码"></a>示例代码</h3><ol>
+<li><p>SSO 服务器</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;net/http&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> tokenStore = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>) <span class="hljs-comment">// 假设的令牌存储</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">loginHandler</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>	<span class="hljs-keyword">if</span> r.Method == http.MethodPost &#123;<br>		username := r.FormValue(<span class="hljs-string">&quot;username&quot;</span>)<br>		password := r.FormValue(<span class="hljs-string">&quot;password&quot;</span>)<br><br>		<span class="hljs-comment">// 简单的身份验证示例</span><br>		<span class="hljs-keyword">if</span> username == <span class="hljs-string">&quot;user&quot;</span> &amp;&amp; password == <span class="hljs-string">&quot;pass&quot;</span> &#123;<br>			token := fmt.Sprintf(<span class="hljs-string">&quot;token-%d&quot;</span>, time.Now().Unix())<br>			tokenStore[username] = token<br>			http.Redirect(w, r, r.FormValue(<span class="hljs-string">&quot;redirect_uri&quot;</span>)+<span class="hljs-string">&quot;?token=&quot;</span>+token, http.StatusFound)<br>			<span class="hljs-keyword">return</span><br>		&#125;<br>		http.Error(w, <span class="hljs-string">&quot;Invalid credentials&quot;</span>, http.StatusUnauthorized)<br>		<span class="hljs-keyword">return</span><br>	&#125;<br>	http.ServeFile(w, r, <span class="hljs-string">&quot;login.html&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	http.HandleFunc(<span class="hljs-string">&quot;/login&quot;</span>, loginHandler)<br>	http.ListenAndServe(<span class="hljs-string">&quot;:8080&quot;</span>, <span class="hljs-literal">nil</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>子系统</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;net/http&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">homeHandler</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>	token := r.URL.Query().Get(<span class="hljs-string">&quot;token&quot;</span>)<br>	<span class="hljs-keyword">if</span> token == <span class="hljs-string">&quot;&quot;</span> &#123;<br>		http.Redirect(w, r, <span class="hljs-string">&quot;http://localhost:8080/login?redirect_uri=http://localhost:8081/home&quot;</span>, http.StatusFound)<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	<span class="hljs-comment">// 验证令牌</span><br>	<span class="hljs-comment">// 可以拿 Token 去 SSO 服务器验证</span><br>  <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	http.HandleFunc(<span class="hljs-string">&quot;/home&quot;</span>, homeHandler)<br>	http.ListenAndServe(<span class="hljs-string">&quot;:8081&quot;</span>, <span class="hljs-literal">nil</span>)<br>&#125;<br><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="测试步骤-2"><a href="#测试步骤-2" class="headerlink" title="测试步骤"></a>测试步骤</h3><h2 id="基于-Session"><a href="#基于-Session" class="headerlink" title="基于 Session"></a>基于 Session</h2><p>常见的分布式 session 即可</p>
+<p>一般是集群使用</p>
+<h2 id="LDAP-认证"><a href="#LDAP-认证" class="headerlink" title="LDAP 认证"></a>LDAP 认证</h2><h1 id="Oauth-2-0"><a href="#Oauth-2-0" class="headerlink" title="Oauth 2.0"></a>Oauth 2.0</h1><blockquote>
 <p>着重介绍如何接入， 及授权的过程</p>
 <p>不详细介绍安全部分</p>
 </blockquote>
